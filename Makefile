@@ -1,4 +1,4 @@
-NAME := freetype-mac-style
+NAME := freetype-envision
 VERSION := 1.0.0
 
 DIR_SRC=src
@@ -7,23 +7,28 @@ DIR_BUILD=build
 DIR_PROFILED_DEST := /etc/profile.d
 DIR_PROFILED_SRC := $(DIR_SRC)/profile.d
 
-SRC_FTSCRIPT_NAME := freetype-mac-style.sh
+SRC_FTSCRIPT_NAME := freetype-env-envision.sh
 
+
+# Show package information
+info:
+	@echo "$(NAME), version: $(VERSION)"
 
 # Prepare the release for distribution
-build:
+# TODO: Needs tweaking
+build: info
 	mkdir -v -p $(DIR_BUILD)/$(NAME)-$(VERSION)
 	cp -v -r $(DIR_SRC)/* $(DIR_BUILD)/$(NAME)-$(VERSION)
-	tar -cvf $(DIR_BUILD)/$(NAME)-$(VERSION).tar.gz $(DIR_BUILD)/$(NAME)-$(VERSION)
+	tar --directory $(DIR_BUILD) -cvf $(DIR_BUILD)/$(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
 
 # Install the project to the system
-install:
+install: info
 	@echo "Installing the profile.d script"
 	install -m 644 $(DIR_PROFILED_SRC)/$(SRC_FTSCRIPT_NAME) $(DIR_PROFILED_DEST)
 	@echo "Success. Reboot to apply the changes."
 
 # Revert the "install" command
-uninstall:
+uninstall: info
 	@echo "Uninstalling the profile.d script"
 	rm $(DIR_PROFILED_DEST)/$(SRC_FTSCRIPT_NAME)
 	@echo "Success. Reboot to apply the changes."
