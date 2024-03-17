@@ -4,6 +4,19 @@ Carefully tuned adjustments for the font rendering software library **FreeType**
 You can find demo images to compare the changes [here](./assets/comparison).
 
 ## Usage
+
+### Prepare
+Desktop environment font antialiasing (AA for short) should be set to grayscale. Vanilla Gnome comes with grayscale by default, while KDE Plasma uses subpixel AA on most of the distributions.
+
+Installation script **will not** make any changes to font configuration for now, as the process of configuration varies with distributions and DEs.
+
+The most common way of switching to grayscale antialiasing from subpixel:
+1. Configure the Desktop Environment to use grayscale font antialiasing.
+2. Remove the **fontconfig** rule for subpixel antialiasing:
+```sh
+sudo rm /etc/fonts/conf.d/10-sub-pixel-rgb.conf
+```
+
 ### Install
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
