@@ -1,4 +1,2 @@
-# Freetype Envision
-
 ## About
-Carefully tuned tweaks for the **Linux** font rendering engine **Freetype** that aim to improve visibility and refine appearance.
+Carefully tuned adjustments for the font rendering software library **FreeType**, designed to improve visibility and refine appearance on **Linux** platform.
