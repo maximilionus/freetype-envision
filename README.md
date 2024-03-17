@@ -1,6 +1,8 @@
 ## About
 Carefully tuned adjustments for the font rendering software library **FreeType**, designed to improve visibility and refine appearance on the **Linux** platform.
 
+You can find demo images to compare the changes [here](./assets/comparison).
+
 ## Usage
 ### Install
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
