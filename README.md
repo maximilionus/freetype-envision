@@ -13,24 +13,24 @@ Installation script **will not** make any changes to font configuration for now,
 The most common way of switching to grayscale antialiasing from subpixel:
 1. Configure the Desktop Environment to use grayscale font antialiasing.
 2. Remove the **fontconfig** rule for subpixel antialiasing:
-```sh
-sudo rm /etc/fonts/conf.d/10-sub-pixel-rgb.conf
-```
+   ```sh
+   sudo rm /etc/fonts/conf.d/10-sub-pixel-rgb.conf
+   ```
 
 ### Install
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required.
-```sh
-$ sudo ./install.sh
-```
+   ```sh
+   $ sudo ./install.sh
+   ```
 4. Reboot.
 
 ### Revert
 1. Run the command below, root required.
-```sh
-$ sudo ./uninstall.sh
-```
+   ```sh
+   $ sudo ./uninstall.sh
+   ```
 2. Reboot.
 
 ### Safety
