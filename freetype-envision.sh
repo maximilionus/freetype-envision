@@ -6,7 +6,7 @@ set -e
 SRC_DIR=src
 VERSION="0.2.0"
 PROFILED_DIR="$SRC_DIR/profile.d"
-PROFILED_LIGHT="freetype-envision-lite.sh"
+PROFILED_LITE="freetype-envision-lite.sh"
 PROFILED_FULL="freetype-envision-full.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
@@ -33,7 +33,7 @@ project_install () {
     local selected_preset_path
     if [[ $2 == "light" || -z $2 ]]; then
         echo "--> 'Light' preset selected."
-        selected_preset_path="$PROFILED_DIR/$PROFILED_LIGHT"
+        selected_preset_path="$PROFILED_DIR/$PROFILED_LITE"
     elif [[ $2 == "full" ]]; then
         echo "--> 'Full' preset selected."
         selected_preset_path="$PROFILED_DIR/$PROFILED_FULL"
