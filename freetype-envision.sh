@@ -67,9 +67,9 @@ project_install () {
     __read_mode
 
     echo "--> Installing the profile.d script."
-    if (( selected_mode == 1 )); then
+    if [[ selected_mode == 1 ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_LITE" "$DEST_PROFILED_FILE"
-    elif (( selected_mode == 2 )); then
+    elif [[ selected_mode == 2 ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_FULL" "$DEST_PROFILED_FILE"
     fi
 
