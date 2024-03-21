@@ -12,16 +12,14 @@ You can find demo images to compare the changes [here](./assets/comparison).
    ```sh
    $ sudo ./freetype-envision.sh install
    ```
-4. Provide the user input.
-5. Reboot.
+4. Reboot.
 
 ### Revert
 1. Run the command below, root required.
    ```sh
    $ sudo ./freetype-envision.sh remove
    ```
-2. Provide the user input.
-3. Reboot.
+2. Reboot.
 
 ### Modes
 Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
