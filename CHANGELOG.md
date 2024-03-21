@@ -1,6 +1,6 @@
 ## Release 0.2.0
 > [!IMPORTANT]  
-> When upgrading from versions `0.1.*`, be sure to uninstall the previous installation with its `uninstall.sh` script. This is very important because of some incompatible enhancements made to the project.
+> When upgrading from versions `0.1.*`, be sure to uninstall the previous installation with its `uninstall.sh` script. Because of some incompatible enhancements made to the project it no longer can work with previous version tweaks.
 
 ### New
 - Revamped main script, everything in one place.
