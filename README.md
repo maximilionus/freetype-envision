@@ -24,7 +24,7 @@ You can find demo images to compare the changes [here](./assets/comparison).
 3. Reboot.
 
 ### Modes
-Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment, while **Full** one try to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
+Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
 
 **Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
 
@@ -39,7 +39,7 @@ List of features:
     - Enforce grayscale antialiasing (disable sub-pixel)
 
 #### Full mode
-List below only contains the new features, added by this mode:
+List below shows only the new features added by this mode:
 - Configurations for **profile.d**:
     - Additional stem darkening (embolden) for unsafe drivers, such as:
         - `cff`
