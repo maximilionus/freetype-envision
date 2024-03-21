@@ -2,7 +2,7 @@
 # Official docs:
 # - https://freetype.org/freetype2/docs/reference/ft2-properties.html#no-stem-darkening
 #
-# Lite version includes only the safe tweaks to the font drivers, with
+# Normal version includes only the safe tweaks to the font drivers, with
 # stem-darkening disabled for 'cff' driver and no stem darkening for
 # the small font sizes.
 export FREETYPE_PROPERTIES=\
