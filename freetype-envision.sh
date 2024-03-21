@@ -16,7 +16,7 @@ FONTCONFIG_GRAYSCALE="freetype-envision-grayscale.conf"
 FONTCONFIG_GRAYSCALE_PRIOR=11
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 
-glob_selected_mode="normal"
+glob_selected_mode=""
 
 
 __require_root () {
@@ -28,7 +28,7 @@ __require_root () {
 
 __verify_mode () {
     if [[ $1 == "normal" || -z $1 ]]; then
-        glob_selected_mode="normal"  # Assign, can be empty
+        glob_selected_mode="normal"  # Hard-coded, cause can be empty
         echo "--> 'Normal' mode selected."
     elif [[ $1 == "full" ]]; then
         glob_selected_mode=$1
@@ -104,7 +104,7 @@ case $arg_1 in
         show_help
         ;;
     *)
-        echo "Error: Invalid argument: $1."
-        echo "Use \"help\" to get the list of commands."
+        echo "Error: Invalid argument: \"$1\"."
+        echo "Use \"help\" to get the list of commands"
         exit 1
 esac
