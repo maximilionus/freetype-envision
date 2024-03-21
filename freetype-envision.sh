@@ -12,7 +12,7 @@ PROFILED_FULL="freetype-envision-full.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
-FONTCONFIG_GRAYSCALE="freetype-envision-enforce-grayscale.conf"
+FONTCONFIG_GRAYSCALE="freetype-envision-grayscale.conf"
 FONTCONFIG_GRAYSCALE_PRIOR=11
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 
