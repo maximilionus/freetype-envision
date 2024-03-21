@@ -57,5 +57,6 @@ $ sudo ./freetype-envision.sh remove full
 
 List below shows only the new features added by this mode:
 - Configurations for **profile.d**:
+    - Steam darkening enabled even for the small fonts. This may cause weird visual distortions.
     - Additional stem darkening (embolden) for unsafe drivers, such as:
         - `cff`
