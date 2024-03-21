@@ -89,6 +89,9 @@ project_remove () {
     echo "--> Removing the profile.d script"
     rm -fv "$DEST_PROFILED_FILE"
 
+    echo "--> Removing the fontconfig configuration."
+    rm -fv "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE_PRIOR-$FONTCONFIG_GRAYSCALE"
+
     echo "-> Success! Reboot to apply the changes."
 }
 
