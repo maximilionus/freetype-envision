@@ -6,14 +6,35 @@ set -e
 SRC_DIR=src
 VERSION="0.2.0"
 PROFILED_DIR="$SRC_DIR/profile.d"
-PROFILED_LITE="freetype-envision-lite.sh"
+PROFILED_LITE="freetype-envision-normal.sh"
 PROFILED_FULL="freetype-envision-full.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
+selected_mode=0
 
-require_root () {
+
+__require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
         echo "This action requires the root privileges"
+        exit 1
+    fi
+}
+
+__read_mode () {
+    local selected_mode
+    echo "Select the mode."
+    echo
+    echo "1 - Normal (Default, leave empty to use it)"
+    echo "2 - Full"
+    echo
+    read -p "Input: " selected_mode
+
+    if [[ $selected_mode == 1 || -z $selected_mode ]]; then
+        echo "--> 'Normal' mode selected."
+    elif [[ $selected_mode == 2 ]]; then
+        echo "--> 'Full' mode selected."
+    else
+        echo "Wrong mode, stopping"
         exit 1
     fi
 }
@@ -23,32 +44,41 @@ show_header () {
 }
 
 show_help () {
-    echo "Abandon hope all ye who enter here"
+    echo "Usage: ./freetype-envision.sh [COMMAND]"
+    echo
+    echo "COMMANDS:"
+    echo "  [i]nstall <mode> : Install the project."
+    echo "                     <mode>: normal (default)"
+    echo "                             full"
+    echo "  [r]remove        : Remove the installed project."
+    echo "  [h]elp           : Show this help message."
+    exit 0
 }
 
 project_install () {
-    echo "-> Begin project installation."
-    require_root
-
-    local selected_preset_path
-    if [[ $2 == "light" || -z $2 ]]; then
-        echo "--> 'Light' preset selected."
-        selected_preset_path="$PROFILED_DIR/$PROFILED_LITE"
-    elif [[ $2 == "full" ]]; then
-        echo "--> 'Full' preset selected."
-        selected_preset_path="$PROFILED_DIR/$PROFILED_FULL"
-    fi
+    echo "-> Begin project install."
+    __require_root
+    __read_mode
 
     echo "--> Installing the profile.d script."
-    install -v -m 644 "$selected_preset_path" "$DEST_PROFILED_FILE"
+    if (( selected_mode == 1 )); then
+        install -v -m 644 "$PROFILED_DIR/$PROFILED_LITE" "$DEST_PROFILED_FILE"
+    elif (( selected_mode == 2 )); then
+        install -v -m 644 "$PROFILED_DIR/$PROFILED_FULL" "$DEST_PROFILED_FILE"
+    fi
 
     echo "-> Success! Reboot to apply the changes."
 }
 
 project_remove () {
     echo "-> Begin project uninstall."
-    require_root
+    __require_root
+    __read_mode
+
+    echo "--> Removing the profile.d script"
     rm -fv "$DEST_PROFILED_FILE"
+
+    echo "-> Success! Reboot to apply the changes."
 }
 
 
@@ -64,6 +94,7 @@ case $1 in
         show_help
         ;;
     *)
-        echo "No arguments provided"
-        ;;
+        echo "Error: Invalid argument: $1."
+        echo "Use \"help\" to get the list of commands."
+        exit 1
 esac
