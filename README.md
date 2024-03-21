@@ -29,6 +29,15 @@ Currently, there are several configuration presets with different levels of safe
 **Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
 
 #### Normal mode
+Install and remove. Used by default if no second argument provided:
+```sh
+# Install
+$ sudo ./freetype-envision.sh install normal
+
+# Remove
+$ sudo ./freetype-envision.sh remove normal
+```
+
 List of features:
 - Configurations for **profile.d**:
     - Stem darkening (embolden) for safe drivers, such as:
@@ -39,6 +48,15 @@ List of features:
     - Enforce grayscale antialiasing (disable sub-pixel)
 
 #### Full mode
+Install and remove:
+```sh
+# Install
+$ sudo ./freetype-envision.sh install full
+
+# Remove
+$ sudo ./freetype-envision.sh remove full
+```
+
 List below shows only the new features added by this mode:
 - Configurations for **profile.d**:
     - Additional stem darkening (embolden) for unsafe drivers, such as:
