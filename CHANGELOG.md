@@ -1,3 +1,22 @@
+## Release 0.2.0
+> [!IMPORTANT]  
+> When upgrading from versions `0.1.*`, be sure to uninstall the previous installation with its `uninstall.sh` script. This is very important because of some incompatible enhancements made to the project.
+
+### New
+- Revamped main script, everything in one place.
+- Grayscale antialiasing enforcement is automated now, no manual actions required anymore.
+- `cff` driver stem-darkening added to **full** preset.
+
+### Tweaked
+- Stem darkening values tweaked to enhance visibility.
+- Modes renamed:
+    - `safe` --> `normal`.
+    - `unsafe` --> `full`.
+
+### Removed
+- Old control scripts `install.sh` and `uninstall.sh` cut from project.
+
+
 ## Release 0.1.1
 ### Tweaked
 - Improve the structure of profile.d scripts, add comment blocks describing actions.
