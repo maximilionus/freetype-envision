@@ -14,6 +14,7 @@ DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
 FONTCONFIG_GRAYSCALE="freetype-envision-enforce-grayscale.conf"
 FONTCONFIG_GRAYSCALE_PRIOR=11
+DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 
 selected_mode=0
 
@@ -73,7 +74,9 @@ project_install () {
     fi
 
     echo "--> Installing the fontconfig configuration."
-    install -v -m 644 "$FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE_PRIOR-$FONTCONFIG_GRAYSCALE"
+    install -v -m 644 \
+        "$FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE" \
+        "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE_PRIOR-$FONTCONFIG_GRAYSCALE"
 
     echo "-> Success! Reboot to apply the changes."
 }
