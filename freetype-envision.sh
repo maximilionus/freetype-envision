@@ -47,11 +47,12 @@ show_help () {
     echo "Usage: ./freetype-envision.sh [COMMAND]"
     echo
     echo "COMMANDS:"
-    echo "  [i]nstall <mode> : Install the project."
-    echo "                     <mode>: normal (default)"
-    echo "                             full"
-    echo "  [r]remove        : Remove the installed project."
-    echo "  [h]elp           : Show this help message."
+    echo "  i,install <mode> : Install the project."
+    echo "  r,remove <mode>  : Remove the installed project."
+    echo "  h,help           : Show this help message."
+    echo "OPTIONS:"
+    echo "   mode            : \"normal\" (default),"
+    echo "                     \"full\"."
     exit 0
 }
 
