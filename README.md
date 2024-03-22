@@ -26,6 +26,21 @@ Currently, there are several configuration presets with different levels of safe
 
 **Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
 
+
+|     | Normal | Full |
+| :-- | :----: | :--: |
+| *Configurations in profile.d* : | | |
+| *Stem darkening (embolden) for drivers:* | | |
+| `autofitter` | Yes | Yes |
+| `type1` | Yes | Yes |
+| `t1cid` | Yes | Yes |
+| `cff` | No | Yes |
+| Steam darkening enabled for the small font sizes | No | Yes |
+| | | |
+| *Configurations for fontconfig:* | | |
+| Enforce grayscale antialiasing (disable sub-pixel) | Yes | Yes |
+
+
 #### Normal mode
 Install and remove. Used by default if no second argument provided:
 ```sh
@@ -36,15 +51,6 @@ $ sudo ./freetype-envision.sh install normal
 $ sudo ./freetype-envision.sh remove normal
 ```
 
-List of features:
-- Configurations for **profile.d**:
-    - Stem darkening (embolden) for safe drivers, such as:
-        - `autofitter`
-        - `type1`
-        - `t1cid`
-- Configurations for **fontconfig**:
-    - Enforce grayscale antialiasing (disable sub-pixel)
-
 #### Full mode
 Install and remove:
 ```sh
@@ -54,9 +60,3 @@ $ sudo ./freetype-envision.sh install full
 # Remove
 $ sudo ./freetype-envision.sh remove full
 ```
-
-List below shows only the new features added by this mode:
-- Configurations for **profile.d**:
-    - Steam darkening enabled even for the small fonts. This may cause weird visual distortions.
-    - Additional stem darkening (embolden) for unsafe drivers, such as:
-        - `cff`
