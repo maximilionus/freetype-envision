@@ -29,7 +29,7 @@ Currently, there are several configuration presets with different levels of safe
 
 |     | Normal | Full |
 | :-- | :----: | :--: |
-| *Configurations in profile.d* : | | |
+| *Configurations in profile.d:* | | |
 | *Stem darkening (embolden) for drivers:* | | |
 | `autofitter` | Yes | Yes |
 | `type1` | Yes | Yes |
@@ -37,7 +37,7 @@ Currently, there are several configuration presets with different levels of safe
 | `cff` | No | Yes |
 | Steam darkening enabled for the small font sizes | No | Yes |
 | | | |
-| *Configurations for fontconfig:* | | |
+| *Configurations in fontconfig:* | | |
 | Enforce grayscale antialiasing (disable sub-pixel) | Yes | Yes |
 
 
