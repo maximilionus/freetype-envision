@@ -6,6 +6,7 @@
 - Revamped main script, everything in one place.
 - Grayscale antialiasing enforcement is automated now, no manual actions required anymore.
 - `cff` driver stem-darkening added to **full** preset.
+- Enabled stem-darkening for `type1` and `t1cid` drivers.
 
 ### Tweaked
 - Stem darkening values tweaked to enhance visibility.
