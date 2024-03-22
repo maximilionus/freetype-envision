@@ -27,18 +27,26 @@ Currently, there are several configuration presets with different levels of safe
 **Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
 
 
-|     | Normal | Full |
-| :-- | :----: | :--: |
-| *Configurations in profile.d:* | | |
-| *Stem darkening (embolden) for drivers:* | | |
-| `autofitter` | Yes | Yes |
-| `type1` | Yes | Yes |
-| `t1cid` | Yes | Yes |
-| `cff` | No | Yes |
-| Steam darkening enabled for the small font sizes | No | Yes |
-| | | |
-| *Configurations in fontconfig:* | | |
-| Enforce grayscale antialiasing (disable sub-pixel) | Yes | Yes |
+- Configurations in profile.d
+   - Stem darkening (embolden) for drivers
+
+     |     | Normal | Full |
+     | :-- | :----: | :--: |
+     | `autofitter` | Yes | Yes |
+     | `type1` | Yes | Yes |
+     | `t1cid` | Yes | Yes |
+     | `cff` | No | Yes |
+
+   - Steam darkening enabled for the small font sizes
+     | Normal | Full |
+     | :----: | :--: |
+     | No | Yes |
+
+- Configurations in fontconfig
+   - Enforce grayscale antialiasing (disable sub-pixel)
+     | Normal | Full |
+     | :----: | :--: |
+     | Yes | Yes |
 
 
 #### Normal mode
