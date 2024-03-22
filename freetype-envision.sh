@@ -29,10 +29,10 @@ __require_root () {
 __verify_mode () {
     if [[ $1 == "normal" || -z $1 ]]; then
         glob_selected_mode="normal"  # Hard-coded, cause can be empty
-        echo "--> 'Normal' mode selected."
+        echo "-> \"Normal\" mode selected."
     elif [[ $1 == "full" ]]; then
         glob_selected_mode=$1
-        echo "--> 'Full' mode selected."
+        echo "-> \"Full\" mode selected."
     else
         echo "Wrong mode, stopping."
         exit 1
