@@ -28,8 +28,7 @@ Currently, there are several configuration presets with different levels of safe
 
 
 - Configurations in profile.d
-   - Stem darkening (embolden) for drivers
-
+   - Stem-darkening (embolden) for drivers
      |     | Normal | Full |
      | :-- | :----: | :--: |
      | `autofitter` | Yes | Yes |
@@ -37,7 +36,7 @@ Currently, there are several configuration presets with different levels of safe
      | `t1cid` | Yes | Yes |
      | `cff` | No | Yes |
 
-   - Steam darkening enabled for the small font sizes
+   - Stem-darkening enabled for the small font sizes
      | Normal | Full |
      | :----: | :--: |
      | No | Yes |
