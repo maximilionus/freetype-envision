@@ -1,3 +1,11 @@
+## Release 0.2.1
+### Fixed
+- Problems with the lack of visual distinction between fonts of different weights on dark backgrounds.
+
+### Tweaked
+- The visibility of small font sizes has been slightly improved.
+
+
 ## Release 0.2.0
 > [!IMPORTANT]  
 > When upgrading from versions `0.1.*`, be sure to uninstall the previous installation with its `uninstall.sh` script. Because of some incompatible enhancements made to the project it no longer can work with previous version tweaks.
