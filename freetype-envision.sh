@@ -27,10 +27,11 @@ __require_root () {
 }
 
 __verify_mode () {
-    if [[ $1 == "normal" || -z $1 ]]; then
-        glob_selected_mode="normal"  # Hard-coded, cause can be empty
+    local sel_mode="${1:-normal}"
+
+    if [[ $sel_mode == "normal" ]]; then
         echo "-> \"Normal\" mode selected."
-    elif [[ $1 == "full" ]]; then
+    elif [[ $sel_mode == "full" ]]; then
         glob_selected_mode=$1
         echo "-> \"Full\" mode selected."
     else
@@ -89,9 +90,11 @@ project_remove () {
 }
 
 
-show_header
+# Main logic below
 arg_1="$1"
 arg_2="$2"
+
+show_header
 
 case $arg_1 in
     i|install)
