@@ -31,8 +31,9 @@ __verify_mode () {
 
     if [[ $sel_mode == "normal" ]]; then
         echo "-> \"Normal\" mode selected."
+        glob_selected_mode=$sel_mode
     elif [[ $sel_mode == "full" ]]; then
-        glob_selected_mode=$1
+        glob_selected_mode=$sel_mode
         echo "-> \"Full\" mode selected."
     else
         echo "Wrong mode, stopping."
