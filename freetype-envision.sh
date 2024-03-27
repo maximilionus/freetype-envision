@@ -30,8 +30,8 @@ __verify_mode () {
     local sel_mode="${1:-normal}"
 
     if [[ $sel_mode == "normal" ]]; then
-        echo "-> \"Normal\" mode selected."
         glob_selected_mode=$sel_mode
+        echo "-> \"Normal\" mode selected."
     elif [[ $sel_mode == "full" ]]; then
         glob_selected_mode=$sel_mode
         echo "-> \"Full\" mode selected."
