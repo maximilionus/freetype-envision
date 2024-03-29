@@ -8,14 +8,14 @@ You can find demo images to compare the changes [here](./assets/comparison).
 ### Install
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
-3. Run the command below, root required.
+3. Run the command below, root required:
    ```sh
    $ sudo ./freetype-envision.sh install
    ```
 4. Reboot.
 
 ### Revert
-1. Run the command below, root required.
+1. Run the command below, root required:
    ```sh
    $ sudo ./freetype-envision.sh remove
    ```
@@ -49,7 +49,8 @@ Currently, there are several configuration presets with different levels of safe
 
 
 #### Normal mode
-Install and remove. Used by default if no second argument provided:
+> Used by default if no second argument provided.
+
 ```sh
 # Install
 $ sudo ./freetype-envision.sh install normal
@@ -59,7 +60,7 @@ $ sudo ./freetype-envision.sh remove normal
 ```
 
 #### Full mode
-Install and remove:
+
 ```sh
 # Install
 $ sudo ./freetype-envision.sh install full
