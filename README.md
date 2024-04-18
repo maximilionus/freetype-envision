@@ -3,7 +3,7 @@ Carefully tuned adjustments for the font rendering software library **FreeType**
 
 You can find demo images to compare the changes [here](./assets/comparison).
 
-## Usage
+## Basic Usage
 
 ### Install
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
@@ -14,14 +14,14 @@ You can find demo images to compare the changes [here](./assets/comparison).
    ```
 4. Reboot.
 
-### Revert
+### Remove
 1. Run the command below, root required:
    ```sh
    $ sudo ./freetype-envision.sh remove
    ```
 2. Reboot.
 
-### Modes
+## Modes
 Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
 
 **Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
