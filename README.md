@@ -22,7 +22,7 @@ You can find demo images to compare the changes [here](./assets/comparison).
 2. Reboot.
 
 ## Modes
-Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment and is therefore used by default, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
+Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment and is therefore used by default, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, at the cost of severe distortions in the rendering of some elements.
 
 
 - Configurations in profile.d
