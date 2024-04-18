@@ -1,7 +1,7 @@
 ## About
 Carefully tuned adjustments for the font rendering software library **FreeType**, designed to improve visibility and refine appearance on the **Linux** platform.
 
-You can find demo images to compare the changes [here](./assets/comparison).
+You can find demo images to compare the changes [here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
 
 ## Basic Usage
 
