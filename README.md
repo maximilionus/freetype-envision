@@ -22,9 +22,7 @@ You can find demo images to compare the changes [here](./assets/comparison).
 2. Reboot.
 
 ## Modes
-Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
-
-**Normal** mode is used by default, although it is recommended to try if the **Full** mode is suitable for you. Details are placed below.
+Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment and is therefore used by default, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, while causing severe distortions in the rendering of some elements.
 
 
 - Configurations in profile.d
@@ -48,7 +46,7 @@ Currently, there are several configuration presets with different levels of safe
      | Yes | Yes |
 
 
-#### Normal mode
+### Normal mode
 > Used by default if no second argument provided.
 
 ```sh
@@ -59,7 +57,7 @@ $ sudo ./freetype-envision.sh install normal
 $ sudo ./freetype-envision.sh remove normal
 ```
 
-#### Full mode
+### Full mode
 
 ```sh
 # Install
