@@ -1,3 +1,8 @@
+## Release 0.2.2
+### Tweaked
+- Minor enhancements to the installation script.
+
+
 ## Release 0.2.1
 ### Fixed
 - Problems with the lack of visual distinction between fonts of different weights on dark backgrounds.
