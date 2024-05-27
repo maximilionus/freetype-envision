@@ -3,6 +3,7 @@ Carefully tuned adjustments for the font rendering software library **FreeType**
 
 You can find demo images to compare the changes [here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
 
+
 ## Basic Usage
 
 ### Install
@@ -21,7 +22,10 @@ You can find demo images to compare the changes [here](https://drive.google.com/
    ```
 2. Reboot.
 
-## Modes
+
+## Advanced Usage
+
+### Modes
 Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment and is therefore used by default, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, at the cost of severe distortions in the rendering of some elements.
 
 
@@ -46,7 +50,7 @@ Currently, there are several configuration presets with different levels of safe
      | Yes | Yes |
 
 
-### Normal mode
+#### Normal mode
 > Used by default if no second argument provided.
 
 ```sh
@@ -57,7 +61,7 @@ $ sudo ./freetype-envision.sh install normal
 $ sudo ./freetype-envision.sh remove normal
 ```
 
-### Full mode
+#### Full mode
 
 ```sh
 # Install
@@ -65,4 +69,14 @@ $ sudo ./freetype-envision.sh install full
 
 # Remove
 $ sudo ./freetype-envision.sh remove full
+```
+
+### Shortcuts
+The first argument to start the script can be abbreviated by the first letter of the command name.
+
+
+For example, to call **install** mode, it would be enough to give the script `i` as the first argument:
+
+```sh
+$ sudo ./freetype-envision.sh i
 ```
