@@ -7,6 +7,6 @@
 # the small font sizes.
 export FREETYPE_PROPERTIES=\
 "autofitter:no-stem-darkening=0\
- autofitter:darkening-parameters=500,0,1000,400,1250,250,1500,225\
+ autofitter:darkening-parameters=500,0,1000,400,1500,400,2333,0\
  type1:no-stem-darkening=0\
  t1cid:no-stem-darkening=0"

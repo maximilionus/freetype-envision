@@ -1,5 +1,9 @@
 ## Release 0.2.2
 ### Tweaked
+- Stem-darkening values adjusted to decrease the visual artifacts.
+
+## Release 0.2.2
+### Tweaked
 - Minor enhancements to the installation script.
 
 
