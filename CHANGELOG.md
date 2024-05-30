@@ -1,6 +1,10 @@
-## Release 0.2.2
+## Release 0.2.3
 ### Tweaked
-- Stem-darkening values adjusted to decrease the visual artifacts and improve the small fonts visibility.
+- Stem-darkening values adjusted:
+    - Improve the small-sized fonts visibility.
+    - Reduced visual artifacts for medium-sized fonts.
+    - Turned back on the darkening max. threshold for big-sized fonts.
+
 
 ## Release 0.2.2
 ### Tweaked
