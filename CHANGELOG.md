@@ -1,6 +1,6 @@
 ## Release 0.2.2
 ### Tweaked
-- Stem-darkening values adjusted to decrease the visual artifacts.
+- Stem-darkening values adjusted to decrease the visual artifacts and improve the small fonts visibility.
 
 ## Release 0.2.2
 ### Tweaked
