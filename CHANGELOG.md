@@ -1,3 +1,9 @@
+## Release 0.3.0
+### Tweaked
+- Project license changed to the BSD-3-Clause. I don't think it makes sense to use a license as restrictive as the GPL.
+- Stem-darkening value increased for the min. sized fonts in "Full" preset.
+
+
 ## Release 0.2.3
 ### Tweaked
 - Stem-darkening values adjusted:
