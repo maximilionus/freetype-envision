@@ -86,7 +86,7 @@ $ sudo ./freetype-envision.sh i
 The repository also contains a Makefile for building the project archive for further distribution via package managers. This archive does not contain the main script! The final build made by this method is distributed with each release.
 
 Archive naming: `freetype-envision-X.Y.Z.tar.gz`, where:
-    - `X.Y.Z` stands for current version
+- `X.Y.Z` stands for current version
 
 #### Build
 1. Execute:
