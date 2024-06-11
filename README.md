@@ -4,28 +4,46 @@ Carefully tuned adjustments for the font rendering software library **FreeType**
 You can find demo images to compare the changes [here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
 
 
-## Basic Usage
+## Install
 
-### Install
+### Fedora, RHEL
+1. Enable the **copr** repository:
+```sh
+$ sudo dnf copr enable maximilionus/freetype-envision
+```
+2. Install with:
+```sh
+# Normal mode
+$ sudo dnf install freetype-envision-normal
+
+# Full mode
+$ sudo dnf install freetype-envision-full
+```
+
+### Manual
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required:
-   ```sh
-   $ sudo ./freetype-envision.sh install
-   ```
+```sh
+# Normal mode:
+$ sudo ./freetype-envision.sh install
+# or
+$ sudo ./freetype-envision.sh install normal
+
+# Full mode:
+$ sudo ./freetype-envision.sh install full
+```
 4. Reboot.
 
-### Remove
+Uninstall with:
 1. Run the command below, root required:
-   ```sh
-   $ sudo ./freetype-envision.sh remove
-   ```
+```sh
+$ sudo ./freetype-envision.sh remove
+```
 2. Reboot.
 
 
-## Advanced Usage
-
-### Modes
+## Modes
 Currently, there are several configuration presets with different levels of safety. **Normal** preset is considered least likely to cause visual errors in the user's environment and is therefore used by default, while the **Full** one tries to maximize the readability of the rendering for all the font drivers and options, at the cost of severe distortions in the rendering of some elements.
 
 
@@ -50,30 +68,8 @@ Currently, there are several configuration presets with different levels of safe
      | Yes | Yes |
 
 
-#### Normal mode
-> Used by default if no second argument provided.
-
-```sh
-# Install
-$ sudo ./freetype-envision.sh install normal
-
-# Remove
-$ sudo ./freetype-envision.sh remove normal
-```
-
-#### Full mode
-
-```sh
-# Install
-$ sudo ./freetype-envision.sh install full
-
-# Remove
-$ sudo ./freetype-envision.sh remove full
-```
-
-### Shortcuts
+## Shortcuts
 The first argument to start the script can be abbreviated by the first letter of the command name.
-
 
 For example, to call **install** mode, it would be enough to give the script `i` as the first argument:
 
@@ -81,14 +77,14 @@ For example, to call **install** mode, it would be enough to give the script `i`
 $ sudo ./freetype-envision.sh i
 ```
 
-### Packaging
-#### Info
+
+## Build
 The repository also contains a Makefile for building the project archive for further distribution via package managers. This archive does not contain the main script! The final build made by this method is distributed with each release.
 
 Archive naming: `freetype-envision-X.Y.Z.tar.gz`, where:
 - `X.Y.Z` stands for current version
 
-#### Build
+To create the release archive:
 1. Execute:
     ```sh
     $ make
