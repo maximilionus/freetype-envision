@@ -19,6 +19,7 @@ $ sudo dnf install freetype-envision-normal
 # Full mode
 $ sudo dnf install freetype-envision-full
 ```
+3. Reboot to apply the changes.
 
 ### Manual
 1. Download the latest release [here](https://github.com/maximilionus/freetype-envision/releases/latest) and unpack it to any user available location.
@@ -33,14 +34,23 @@ $ sudo ./freetype-envision.sh install normal
 # Full mode:
 $ sudo ./freetype-envision.sh install full
 ```
-4. Reboot.
+4. Reboot to apply the changes.
 
 Uninstall with:
 1. Run the command below, root required:
 ```sh
 $ sudo ./freetype-envision.sh remove
 ```
-2. Reboot.
+2. Reboot to apply the changes.
+
+#### Shortcuts
+The first argument to start the script can be abbreviated by the first letter of the command name.
+
+For example, to call **install** mode, it would be enough to give the script `i` as the first argument:
+
+```sh
+$ sudo ./freetype-envision.sh i
+```
 
 
 ## Modes
@@ -66,16 +76,6 @@ Currently, there are several configuration presets with different levels of safe
      | Normal | Full |
      | :----: | :--: |
      | Yes | Yes |
-
-
-## Shortcuts
-The first argument to start the script can be abbreviated by the first letter of the command name.
-
-For example, to call **install** mode, it would be enough to give the script `i` as the first argument:
-
-```sh
-$ sudo ./freetype-envision.sh i
-```
 
 
 ## Build
