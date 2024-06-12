@@ -73,12 +73,12 @@ options, at the cost of severe distortions in the rendering of some elements.
    > This feature improves visibility of the medium and small sized-fonts.
    > Especially helpful for the LowPPI displays.
 
-     |     | Normal | Full |
-     | :-- | :----: | :--: |
-     | `autofitter` | Yes | Yes |
-     | `type1` | Yes | Yes |
-     | `t1cid` | Yes | Yes |
-     | `cff` | Yes | Yes |
+     |              | Normal | Full |
+     | :----------- | :----: | :--: |
+     | `autofitter` | Yes    | Yes  |
+     | `type1`      | Yes    | Yes  |
+     | `t1cid`      | Yes    | Yes  |
+     | `cff`        | Yes    | Yes  |
 
    - Stem-darkening enabled for the small font sizes in `autofitter` driver:
    > Darkening for small sized fonts with `autofitter` driver in **Normal**
@@ -86,7 +86,7 @@ options, at the cost of severe distortions in the rendering of some elements.
 
      | Normal | Full |
      | :----: | :--: |
-     | No | Yes |
+     | No     | Yes  |
 
 - Configurations in fontconfig
    - Enforce grayscale antialiasing (disable sub-pixel):
@@ -95,7 +95,7 @@ options, at the cost of severe distortions in the rendering of some elements.
 
      | Normal | Full |
      | :----: | :--: |
-     | Yes | Yes |
+     | Yes    | Yes  |
 
 
 ## Build
