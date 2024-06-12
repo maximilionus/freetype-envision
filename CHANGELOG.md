@@ -1,3 +1,8 @@
+## Release 0.4.0
+- Enable `cff` driver in **Normal** preset with new darkening values.
+- Stem-darkening values now specified for all drivers (`cff`, `type1`, `t1cid`) in all presets.
+
+
 ## Release 0.3.0
 ### Tweaked
 - Project license changed to the BSD-3-Clause. I don't think it makes sense to use a license as restrictive as the GPL.
