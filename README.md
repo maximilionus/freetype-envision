@@ -64,7 +64,7 @@ Currently, there are several configuration presets with different levels of safe
      | `autofitter` | Yes | Yes |
      | `type1` | Yes | Yes |
      | `t1cid` | Yes | Yes |
-     | `cff` | No | Yes |
+     | `cff` | Yes | Yes |
 
    - Stem-darkening enabled for the small font sizes
      | Normal | Full |
