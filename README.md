@@ -41,7 +41,7 @@ $ sudo ./freetype-envision.sh install full
 ```
 4. Reboot to apply the changes.
 
-Uninstall with:
+#### Uninstall with:
 1. Run the command below, root required:
 ```sh
 $ sudo ./freetype-envision.sh remove
