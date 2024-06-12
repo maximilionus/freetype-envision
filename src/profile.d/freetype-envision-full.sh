@@ -1,4 +1,4 @@
-# Embolden fonts to make them easier to read (mimic the macOS rendering style).
+# Embolden small and medium sized fonts to make them easier to read.
 # Official docs:
 # - https://freetype.org/freetype2/docs/reference/ft2-properties.html#no-stem-darkening
 #
