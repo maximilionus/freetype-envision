@@ -58,7 +58,9 @@ Currently, there are several configuration presets with different levels of safe
 
 
 - Configurations in profile.d
-   - Stem-darkening (embolden) for drivers
+   - Stem-darkening (embolden) for drivers:
+   > This feature improves visibility of the medium and small sized-fonts. Especially helpful for the LowPPI displays.
+
      |     | Normal | Full |
      | :-- | :----: | :--: |
      | `autofitter` | Yes | Yes |
@@ -66,20 +68,24 @@ Currently, there are several configuration presets with different levels of safe
      | `t1cid` | Yes | Yes |
      | `cff` | Yes | Yes |
 
-   - Stem-darkening enabled for the small font sizes
+   - Stem-darkening enabled for the small font sizes in `autofitter` driver:
+   > Darkening for small sized fonts with `autofitter` driver in **Normal** mode is disabled to avoid various rare distortions in the font rendering
+
      | Normal | Full |
      | :----: | :--: |
      | No | Yes |
 
 - Configurations in fontconfig
-   - Enforce grayscale antialiasing (disable sub-pixel)
+   - Enforce grayscale antialiasing (disable sub-pixel):
+   > Grayscale antialiasing should be enforced in the system to make the stem-darkening work properly.
+
      | Normal | Full |
      | :----: | :--: |
      | Yes | Yes |
 
 
 ## Build
-The repository also contains a Makefile for building the project archive for further distribution via package managers. This archive does not contain the main script! The final build made by this method is distributed with each release.
+The repository also contains a Makefile for building the project archive for further distribution via package managers. Note that this archive does not contain the main script! The final build made by this method is distributed with each release.
 
 Archive naming: `freetype-envision-X.Y.Z.tar.gz`, where:
 - `X.Y.Z` stands for current version
