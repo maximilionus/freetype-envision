@@ -17,7 +17,7 @@ $ sudo dnf copr enable maximilionus/freetype-envision
 2. Install with:
 ```sh
 # Normal mode
-$ sudo dnf install freetype-envision-normal
+$ sudo dnf install freetype-envision
 
 # Full mode
 $ sudo dnf install freetype-envision-full
