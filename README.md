@@ -9,8 +9,8 @@ You can find demo images to compare the changes
 ### What this project does
 - Modify all calls to the FreeType library through publicly documented
   environmental variables.
-- Improve the visibility of medium and small-sized fonts by utilizing the disabled
-  by default 'stem-darkening' feature.
+- Improve the visibility of medium and small-sized fonts by utilizing the
+  disabled by default 'stem-darkening' feature.
 - Enforce the font rendering to use grayscale antialiasing, even if the
   environment prefers subpixel *(Explained below)*.
 
@@ -109,6 +109,18 @@ options, at the cost of severe distortions in the rendering of some elements.
      | Normal | Full |
      | :----: | :--: |
      | Yes    | Yes  |
+
+
+## Notes
+### GNOME DE
+GNOME users should consider changing the default system-ui font *Cantarell* to
+any other similar font that doesn't render with the `cff` engine. `cff` engine
+hinting is broken, making the fonts look very distorted after stem-darkening.
+
+Changing the fonts is possible through the `gnome-tweaks` utility.
+
+Fonts to consider:
+- Inter
 
 
 ## Build
