@@ -7,11 +7,11 @@ You can find demo images to compare the changes
 [here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
 
 ### What this project does
-- Modify all calls to FreeType library through publicly documented
+- Modify all calls to the FreeType library through publicly documented
   environmental variables.
-- Improve visibility of medium and small-sized fonts by utilizing the disabled
+- Improve the visibility of medium and small-sized fonts by utilizing the disabled
   by default 'stem-darkening' feature.
-- Enforce the font rendering to use the grayscale antialiasing, even if
+- Enforce the font rendering to use grayscale antialiasing, even if the
   environment prefers subpixel *(Explained below)*.
 
 ### What this project does not
