@@ -120,6 +120,7 @@ hinting is broken, making the fonts look very distorted after stem-darkening.
 Changing the fonts is possible through the `gnome-tweaks` utility.
 
 Fonts to consider:
+- Noto Sans
 - Inter
 
 
