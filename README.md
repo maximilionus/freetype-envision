@@ -86,7 +86,7 @@ options, at the cost of severe distortions in the rendering of some elements.
    > This feature improves visibility of the medium and small sized-fonts.
    > Especially helpful for the LowPPI displays.
 
-     |              | Normal | Full |
+     | Driver       | Normal | Full |
      | :----------- | :----: | :--: |
      | `autofitter` | Yes    | Yes  |
      | `type1`      | Yes    | Yes  |
@@ -105,10 +105,6 @@ options, at the cost of severe distortions in the rendering of some elements.
    - Enforce grayscale antialiasing (disable sub-pixel):
    > Grayscale antialiasing should be enforced in the system to make the
    > stem-darkening work properly.
-
-     | Normal | Full |
-     | :----: | :--: |
-     | Yes    | Yes  |
 
 
 ## Notes
