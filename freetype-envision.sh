@@ -49,7 +49,7 @@ show_help () {
     echo
     echo "COMMANDS:"
     echo "  i,install <mode> : Install the project."
-    echo "  r,remove <mode>  : Remove the installed project."
+    echo "  r,remove         : Remove the installed project."
     echo "  h,help           : Show this help message."
     echo "OPTIONS:"
     echo "   mode            : \"normal\" (default),"
