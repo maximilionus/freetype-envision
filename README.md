@@ -11,10 +11,11 @@ You can find demo images to compare the changes
   environmental variables.
 - Improve the visibility of medium and small-sized fonts by utilizing the
   disabled by default 'stem-darkening' feature.
+- Use additional fontconfig rules to prepare the environment for all the new
+  FreeType features and modify priority for some font families.
 
 ### What this project does not
-- Install any additional fonts.
-- Remove any fonts.
+- Install or remove any font.
 
 
 ## Install
@@ -76,7 +77,7 @@ $ sudo ./freetype-envision.sh i
 ```
 
 
-## Modes
+## Details
 Currently, there are several configuration presets with different levels of
 safety. **Normal** preset is considered least likely to cause visual errors in
 the user's environment and is therefore used by default, while the **Full** one
@@ -84,7 +85,7 @@ tries to maximize the readability of the rendering for all the font drivers and
 options, at the cost of severe distortions in the rendering of some elements.
 
 
-- Configurations in profile.d
+- Configurations in profile.d:
    - Stem-darkening (embolden) for drivers:
    > This feature improves visibility of the medium and small sized-fonts.
    > Especially helpful for the LowPPI displays.
@@ -104,10 +105,15 @@ options, at the cost of severe distortions in the rendering of some elements.
      | :----: | :--: |
      | No     | Yes  |
 
-- Configurations in fontconfig
-   - Enforce grayscale antialiasing (disable sub-pixel):
+- Configurations in fontconfig:
+   - Enforce grayscale antialiasing (disable sub-pixel).
    > Grayscale antialiasing should be enforced in the system to make the
    > stem-darkening work properly.
+
+   - Lower the *Droid Sans* family priority, force the environment to use other
+     fonts for hieroglyphic characters rendering.
+   > Stem-darkening does not work well with these typefaces, causing characters
+   > over-emboldening.
 
 
 ## Notes
@@ -124,17 +130,16 @@ Fonts to consider:
 
 
 ## Build
-The repository also contains a Makefile for building the project archive for
-further distribution via package managers. Note that this archive does not
-contain the main script! The final build made by this method is distributed
-with each release.
-
-Archive naming: `freetype-envision-X.Y.Z.tar.gz`, where:
-- `X.Y.Z` stands for current version
+The repository also contains a GNU Make - Makefile for building the project
+archive for further distribution via package managers. Note that this archive
+does not contain the main script, as all file handling is expected to be done
+by the package manager! The final build made by this method is distributed with
+each release.
 
 To create the release archive:
 1. Execute:
     ```sh
     $ make
     ```
-2. Final archive will be placed in `dist/` directory.
+2. Final archive will be placed in `dist/` directory with name `freetype-envision-X.Y.Z.tar.gz`, where:
+    - `X.Y.Z` stands for current version
