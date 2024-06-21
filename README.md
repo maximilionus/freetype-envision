@@ -11,12 +11,9 @@ You can find demo images to compare the changes
   environmental variables.
 - Improve the visibility of medium and small-sized fonts by utilizing the
   disabled by default 'stem-darkening' feature.
-- Enforce the font rendering to use grayscale antialiasing, even if the
-  environment prefers subpixel *(Explained below)*.
 
 ### What this project does not
 - Install any additional fonts.
-- Modify any fonts.
 - Remove any fonts.
 
 
@@ -38,9 +35,10 @@ $ sudo dnf install freetype-envision-full
 3. Reboot to apply the changes.
 
 ### Manual
+#### Install
 1. Download the latest release
    [here](https://github.com/maximilionus/freetype-envision/releases/latest)
-   and unpack it to any user available location.
+   *(download "Source code")* and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required:
 ```sh
@@ -54,12 +52,17 @@ $ sudo ./freetype-envision.sh install full
 ```
 4. Reboot to apply the changes.
 
-#### Uninstall with:
+#### Uninstall
 1. Run the command below, root required:
 ```sh
 $ sudo ./freetype-envision.sh remove
 ```
 2. Reboot to apply the changes.
+
+#### Upgrade
+1. Follow the **uninstall procedure** using the script exactly the version of
+   the project that is installed in the system.
+2. Download the new version and proceed with **install procedure**.
 
 #### Shortcuts
 The first argument to start the script can be abbreviated by the first letter
