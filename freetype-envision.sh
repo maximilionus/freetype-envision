@@ -13,6 +13,7 @@ DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
 FONTCONFIG_GRAYSCALE="11-freetype-envision-grayscale.conf"
+FONTCONFIG_DROID_SANS="99-freetype-envision-droid-sans.conf"
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 
 glob_selected_mode=""
@@ -61,17 +62,21 @@ project_install () {
     echo "-> Begin project install."
     __require_root
 
-    echo "--> Installing the profile.d script."
+    echo "--> Installing the profile.d scripts:"
     if [[ $glob_selected_mode == "normal" ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_NORMAL" "$DEST_PROFILED_FILE"
     elif [[ $glob_selected_mode == "full" ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_FULL" "$DEST_PROFILED_FILE"
     fi
 
-    echo "--> Installing the fontconfig configuration."
+    echo "--> Installing the fontconfig configurations:"
     install -v -m 644 \
         "$FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE" \
         "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE"
+
+    install -v -m 644 \
+        "$FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS" \
+        "$DEST_FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS"
 
     echo "-> Success! Reboot to apply the changes."
 }
@@ -80,11 +85,12 @@ project_remove () {
     echo "-> Begin project uninstall."
     __require_root
 
-    echo "--> Removing the profile.d script"
+    echo "--> Removing the profile.d scripts:"
     rm -fv "$DEST_PROFILED_FILE"
 
-    echo "--> Removing the fontconfig configuration."
+    echo "--> Removing the fontconfig configurations:"
     rm -fv "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE"
+    rm -fv "$DEST_FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS"
 
     echo "-> Success! Reboot to apply the changes."
 }
