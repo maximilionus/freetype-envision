@@ -48,9 +48,9 @@ cd "$TMP_DIR"
 if [ -z "$VERSION" ]; then
     echo "[+] Preparing the latest release."
     curl -s -L $DOWNLOAD_LATEST_URL \
-        | grep "tarball_url"      \
-        | tr -d ' ",;'            \
-        | sed 's/tarball_url://'  \
+        | grep "tarball_url"        \
+        | tr -d ' ",;'              \
+        | sed 's/tarball_url://'    \
         | xargs curl -s -L -o "$NAME.tar.gz"
 else
     echo "[+] Preparing the '$VERSION' release."
