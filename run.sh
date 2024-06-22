@@ -1,11 +1,28 @@
 #!/bin/bash
 
+# Wrapper for the freetype-envision project that will download and unpack all
+# the necessary files for the latest or user-specified version, and execute the
+# script, passing all the provided arguments.
+#
+# User can specify the project version with VERSION environmental variable.
+#
+# Example local usage:
+# $ sudo ./run.sh install full
+# $ sudo VERSION=0.4.0 ./run.sh install
+#
+# Example web usage:
+# $ curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+#   | sudo bash -s -- install full
+#
+# $ curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+#   | sudo VERSION=0.2.0 bash -s -- install full
+
 set -e
 
 NAME="freetype-envision"
+SCRIPT_NAME="$NAME.sh"
 VERSION="${VERSION:-}"
 VERSION_MIN_SUPPORTED="0.2.0"
-SCRIPT_NAME="$NAME.sh"
 DOWNLOAD_LATEST_URL="https://api.github.com/repos/maximilionus/$NAME/releases/latest"
 DOWNLOAD_SELECTED_URL="https://api.github.com/repos/maximilionus/$NAME/tarball/v$VERSION"
 
