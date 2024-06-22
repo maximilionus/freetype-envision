@@ -24,7 +24,8 @@ if [ ! -d "$TMP_DIR" ]; then
     exit 1
 fi
 
-echo "[+] Using tempory directory '$TMP_DIR'."
+echo "[+] Using temporary directory $TMP_DIR."
+trap 'rm -rf -- "$TMP_DIR" && echo "[+] Temporary directory $TMP_DIR wiped."' EXIT
 cd "$TMP_DIR"
 
 if [ -z "$VERSION" ]; then
@@ -51,7 +52,3 @@ tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
 
 cd unpacked
 ./"$SCRIPT_NAME" "$@"
-
-cd /
-rm -rf "$TMP_DIR"
-echo "[+] Temporary location '$TMP_DIR' wiped."
