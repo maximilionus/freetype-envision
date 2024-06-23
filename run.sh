@@ -25,6 +25,7 @@ VERSION="${VERSION:-}"
 VERSION_MIN_SUPPORTED="0.2.0"
 DOWNLOAD_LATEST_URL="https://api.github.com/repos/maximilionus/$NAME/releases/latest"
 DOWNLOAD_SELECTED_URL="https://api.github.com/repos/maximilionus/$NAME/tarball/v$VERSION"
+CURL_FLAGS="-s --show-error --fail -L"
 
 # Is version $2 >= $1
 verlte() {
@@ -45,13 +46,14 @@ echo "[+] Using temporary directory $TMP_DIR."
 trap 'rm -rf -- "$TMP_DIR" && echo "[+] Temporary directory $TMP_DIR wiped."' EXIT
 cd "$TMP_DIR"
 
+download_url=""
 if [ -z "$VERSION" ]; then
     echo "[+] Preparing the latest release."
-    curl -s -L $DOWNLOAD_LATEST_URL \
-        | grep "tarball_url"        \
-        | tr -d ' ",;'              \
-        | sed 's/tarball_url://'    \
-        | xargs curl -s -L -o "$NAME.tar.gz"
+
+    download_url=$(curl $CURL_FLAGS "$DOWNLOAD_LATEST_URL"  \
+        | grep "tarball_url"                                \
+        | tr -d ' ",;'                                      \
+        | sed 's/tarball_url://')
 else
     echo "[+] Preparing the '$VERSION' release."
 
@@ -61,8 +63,10 @@ else
         exit 1
     fi
 
-    curl -s -L -o "$NAME.tar.gz" "$DOWNLOAD_SELECTED_URL"
+    download_url="$DOWNLOAD_SELECTED_URL"
 fi
+
+curl $CURL_FLAGS -o "$NAME.tar.gz" "$download_url"
 
 mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
