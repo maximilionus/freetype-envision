@@ -3,7 +3,7 @@
 
 
 Name:           %{base_name}
-Version:        0.4.0
+Version:        0.5.0
 Release:        1%{?dist}
 BuildArch:      noarch
 Summary:        FreeType font rendering library adjustments to improve visibility on the Linux platform, %{variation} preset
@@ -36,8 +36,12 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_sysconfdir}/profile.d
 mkdir -p %{buildroot}/%{_sysconfdir}/fonts/conf.d
 
+# profile.d
 install -m 644 profile.d/freetype-envision-%{variation}.sh %{buildroot}/%{_sysconfdir}/profile.d/freetype-envision.sh
+
+# fontconfig
 install -m 644 fontconfig/freetype-envision-grayscale.conf %{buildroot}/%{_sysconfdir}/fonts/conf.d/11-freetype-envision-grayscale.conf
+install -m 644 fontconfig/freetype-envision-droid-sans.conf %{buildroot}/%{_sysconfdir}/fonts/conf.d/70-freetype-envision-droid-sans.conf
 
 
 %files
@@ -46,6 +50,9 @@ install -m 644 fontconfig/freetype-envision-grayscale.conf %{buildroot}/%{_sysco
 
 
 %changelog
+* Tue Jun 25 2024 maximilionus <maximilionuss@gmail.com>
+- Update to version 0.5.0
+
 * Thu Jun 13 2024 maximilionus <maximilionuss@gmail.com>
 - Update to version 0.4.0
 
