@@ -1,3 +1,8 @@
+## Release 0.5.0
+- New fontconfig rule to reject the usage of *Droid Sans* font family for
+  Japanese and Chinese (#1).
+
+
 ## Release 0.4.0
 - Enable `cff` driver in the **Normal** preset with new darkening values that
   reduce font distortion with this driver to a minimum. Major feature for

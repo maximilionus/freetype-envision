@@ -4,7 +4,7 @@ set -e
 
 
 SRC_DIR=src
-VERSION="0.4.0"
+VERSION="0.5.0"
 
 PROFILED_DIR="$SRC_DIR/profile.d"
 PROFILED_NORMAL="freetype-envision-normal.sh"
