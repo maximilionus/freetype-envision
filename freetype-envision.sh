@@ -19,6 +19,15 @@ DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
+# Storing the manual (from script) installation info on target system.
+# Disable by setting the STORE_STATE env variable to false, but only do it when
+# using some other tool (package manager, etc) for project management, where
+# this script is only used to install the project files to target system.
+STORE_STATE="${STORE_STATE:-true}"
+DEST_CONF_DIR="/etc/freetype-envision"
+DEST_STATE_FILE="state"
+
+# Global variables
 glob_selected_mode=""
 
 
@@ -44,6 +53,27 @@ __verify_mode () {
     fi
 }
 
+__verify_ver () {
+    if [[ -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
+        # State file exists, checking if the version is same
+        declare -A state  # Kind of a namespace to store state vars
+        source "$DEST_CONF_DIR/$DEST_STATE_FILE"
+
+        if [[ ${state[version]} != $VERSION ]]; then
+            echo "Manually installed project of a previous or newer version is already installed on the system. Remove it with a script of the appropriate version." | fold -sw 80
+            exit 1
+        fi
+
+        unset state
+    else
+        if [[ -f $DEST_PROFILED_FILE ]]; then
+            # Project files exist on the taget system, but no state file
+            echo "Project is already installed on the system, probably with package manager or an installation script for the version below '0.5.0'. Remove it using the original installation method." | fold -sw 80
+            exit 1
+        fi
+    fi
+}
+
 show_header () {
     echo "FreeType Envision, version $VERSION"
 }
@@ -63,6 +93,7 @@ show_help () {
 
 project_install () {
     echo "-> Begin project install."
+    __verify_ver
     __require_root
 
     echo "--> Installing the profile.d scripts:"
@@ -81,11 +112,19 @@ project_install () {
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
+    if [[ $STORE_STATE = true ]]; then
+        echo "--> Storing installation info to '$DEST_CONF_DIR/$DEST_STATE_FILE':"
+        mkdir -pv "$DEST_CONF_DIR"
+        echo "state[version]='$VERSION'" | tee "$DEST_CONF_DIR/$DEST_STATE_FILE"
+        echo "state[mode]='$glob_selected_mode'" | tee -a "$DEST_CONF_DIR/$DEST_STATE_FILE"
+    fi
+
     echo "-> Success! Reboot to apply the changes."
 }
 
 project_remove () {
-    echo "-> Begin project uninstall."
+    echo "-> Begin project removal."
+    __verify_ver
     __require_root
 
     echo "--> Removing the profile.d scripts:"
@@ -94,6 +133,9 @@ project_remove () {
     echo "--> Removing the fontconfig configurations:"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
+
+    echo "--> Removing the configurations directory:"
+    rm -rfv "$DEST_CONF_DIR"
 
     echo "-> Success! Reboot to apply the changes."
 }
