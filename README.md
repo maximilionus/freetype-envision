@@ -110,8 +110,8 @@ options, at the cost of severe distortions in the rendering of some elements.
    > Grayscale antialiasing should be enforced in the system to make the
    > stem-darkening work properly.
 
-   - Lower the *Droid Sans* family priority, force the environment to use other
-     fonts for hieroglyphic characters rendering.
+   - Reject usage of *Droid Sans* family for Japanese and Chinese, force the
+     environment to use other fonts.
    > Stem-darkening does not work well with these typefaces, causing characters
    > over-emboldening.
 
