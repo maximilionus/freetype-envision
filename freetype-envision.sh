@@ -169,9 +169,12 @@ show_header
 # ! Remove on 1.0.0
 case $arg_1 in
     i|r|h)
-        echo
-        echo "Warning: Argument '$1', short command, is considered deprecated and will be removed in '1.0.0' project release." | fold -sw 80
-        echo
+        cat <<EOF
+--------
+Warning: Argument '$1', short command, is considered deprecated and will be
+removed in '1.0.0' project release.
+--------
+EOF
         ;;
 esac
 
