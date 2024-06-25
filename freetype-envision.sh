@@ -28,7 +28,7 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-glob_selected_mode=""
+declare g_selected_mode
 
 
 __require_root () {
@@ -42,10 +42,10 @@ __verify_mode () {
     local sel_mode="${1:-normal}"
 
     if [[ $sel_mode == "normal" ]]; then
-        glob_selected_mode=$sel_mode
+        g_selected_mode=$sel_mode
         echo "-> \"Normal\" mode selected."
     elif [[ $sel_mode == "full" ]]; then
-        glob_selected_mode=$sel_mode
+        g_selected_mode=$sel_mode
         echo "-> \"Full\" mode selected."
     else
         echo "Wrong mode, stopping."
@@ -97,9 +97,9 @@ project_install () {
     __require_root
 
     echo "--> Installing the profile.d scripts:"
-    if [[ $glob_selected_mode == "normal" ]]; then
+    if [[ $g_selected_mode == "normal" ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_NORMAL" "$DEST_PROFILED_FILE"
-    elif [[ $glob_selected_mode == "full" ]]; then
+    elif [[ $g_selected_mode == "full" ]]; then
         install -v -m 644 "$PROFILED_DIR/$PROFILED_FULL" "$DEST_PROFILED_FILE"
     fi
 
@@ -116,7 +116,7 @@ project_install () {
         echo "--> Storing installation info to '$DEST_CONF_DIR/$DEST_STATE_FILE':"
         mkdir -pv "$DEST_CONF_DIR"
         echo "state[version]='$VERSION'" | tee "$DEST_CONF_DIR/$DEST_STATE_FILE"
-        echo "state[mode]='$glob_selected_mode'" | tee -a "$DEST_CONF_DIR/$DEST_STATE_FILE"
+        echo "state[mode]='$g_selected_mode'" | tee -a "$DEST_CONF_DIR/$DEST_STATE_FILE"
     fi
 
     echo "-> Success! Reboot to apply the changes."
@@ -146,6 +146,14 @@ arg_1="$1"
 arg_2="$2"
 
 show_header
+
+# Deprecate short commands.
+# ! Remove on 1.0.0
+case $arg_1 in
+    i|r|h)
+        echo "Warning: Argument '$1', short command, is considered deprecated and will be removed in '1.0.0' project release." | fold -sw 80
+        ;;
+esac
 
 case $arg_1 in
     i|install)

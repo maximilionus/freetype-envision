@@ -65,17 +65,6 @@ $ sudo ./freetype-envision.sh remove
    the project that is installed in the system.
 2. Download the new version and proceed with **install procedure**.
 
-#### Shortcuts
-The first argument to start the script can be abbreviated by the first letter
-of the command name.
-
-For example, to call **install** mode, it would be enough to give the script
-`i` as the first argument:
-
-```sh
-$ sudo ./freetype-envision.sh i
-```
-
 
 ## Details
 Currently, there are several configuration presets with different levels of
