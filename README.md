@@ -65,6 +65,34 @@ $ sudo ./freetype-envision.sh remove
    the project that is installed in the system.
 2. Download the new version and proceed with **install procedure**.
 
+### Web wrapper
+Project can be installed with automated wrapper script, that will take care of
+fetching all the required files and executing the main script for the latest or
+user-specified version.
+
+> Wrapper derives all the argument calls from the **Manual** installation
+> method above.
+
+#### Usage
+```sh
+curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+    | sudo bash -s -- [COMMAND]
+```
+
+#### Example
+Execute the command below to install the default normal preset:
+```sh
+curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+    | sudo bash -s -- install
+```
+
+You can also specify the version of project you want to use by declaring the
+`VERSION` environmental variable:
+```sh
+curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+    | sudo VERSION="0.2.0" bash -s -- install full
+```
+
 
 ## Details
 Currently, there are several configuration presets with different levels of
