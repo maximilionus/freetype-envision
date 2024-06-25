@@ -47,10 +47,11 @@ install -m 644 fontconfig/freetype-envision-droid-sans.conf %{buildroot}/%{_sysc
 %files
 %{_sysconfdir}/profile.d/freetype-envision.sh
 %{_sysconfdir}/fonts/conf.d/11-freetype-envision-grayscale.conf
+%{_sysconfdir}/fonts/conf.d/70-freetype-envision-droid-sans.conf
 
 
 %changelog
-* Tue Jun 25 2024 maximilionus <maximilionuss@gmail.com>
+* Tue Jun 26 2024 maximilionus <maximilionuss@gmail.com>
 - Update to version 0.5.0
 
 * Thu Jun 13 2024 maximilionus <maximilionuss@gmail.com>
