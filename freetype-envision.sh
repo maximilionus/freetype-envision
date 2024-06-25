@@ -79,15 +79,18 @@ show_header () {
 }
 
 show_help () {
-    echo "Usage: ./freetype-envision.sh [COMMAND]"
+    echo "Usage: $0 [COMMAND]"
     echo
     echo "COMMANDS:"
-    echo "  i,install <mode> : Install the project."
-    echo "  r,remove         : Remove the installed project."
-    echo "  h,help           : Show this help message."
+    echo "  install <mode>     : Install the project."
+    echo "  remove             : Remove the installed project."
+    echo "  help               : Show this help message."
     echo "OPTIONS:"
-    echo "   mode            : \"normal\" (default),"
-    echo "                     \"full\"."
+    echo "  mode (optional)    : 'normal' (default),"
+    echo "                       'full'."
+    echo "ENV:"
+    echo "  STORE_STATE <bool> : Storing the manual (from script) installation info on"
+    echo "                       target system. (true by default)"
     exit 0
 }
 
@@ -151,7 +154,9 @@ show_header
 # ! Remove on 1.0.0
 case $arg_1 in
     i|r|h)
+        echo
         echo "Warning: Argument '$1', short command, is considered deprecated and will be removed in '1.0.0' project release." | fold -sw 80
+        echo
         ;;
 esac
 
