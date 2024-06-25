@@ -60,7 +60,7 @@ __verify_ver () {
         source "$DEST_CONF_DIR/$DEST_STATE_FILE"
 
         if [[ ${state[version]} != $VERSION ]]; then
-            echo "Manually installed project of a previous or newer version is already installed on the system. Remove it with a script of the appropriate version." | fold -sw 80
+            echo "Manually installed project of a previous or newer version already exists on the system. Remove it with a script from the version corresponding to the installed one." | fold -sw 80
             exit 1
         fi
 
