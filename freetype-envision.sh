@@ -6,15 +6,18 @@ set -e
 SRC_DIR=src
 VERSION="0.5.0"
 
+# profile.d
 PROFILED_DIR="$SRC_DIR/profile.d"
 PROFILED_NORMAL="freetype-envision-normal.sh"
 PROFILED_FULL="freetype-envision-full.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
+# fontconfig
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
-FONTCONFIG_GRAYSCALE="11-freetype-envision-grayscale.conf"
-FONTCONFIG_DROID_SANS="99-freetype-envision-droid-sans.conf"
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
+#                     ("<NAME>" "<PRIORITY>")
+FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
+FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
 glob_selected_mode=""
 
@@ -71,12 +74,12 @@ project_install () {
 
     echo "--> Installing the fontconfig configurations:"
     install -v -m 644 \
-        "$FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE" \
-        "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE"
+        "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
+        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
 
     install -v -m 644 \
-        "$FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS" \
-        "$DEST_FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS"
+        "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
+        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "-> Success! Reboot to apply the changes."
 }
@@ -89,8 +92,8 @@ project_remove () {
     rm -fv "$DEST_PROFILED_FILE"
 
     echo "--> Removing the fontconfig configurations:"
-    rm -fv "$DEST_FONTCONFIG_DIR/$FONTCONFIG_GRAYSCALE"
-    rm -fv "$DEST_FONTCONFIG_DIR/$FONTCONFIG_DROID_SANS"
+    rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
+    rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "-> Success! Reboot to apply the changes."
 }
