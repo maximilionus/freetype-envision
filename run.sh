@@ -6,11 +6,13 @@
 #
 # User can specify the project version with VERSION environmental variable.
 #
-# Example local usage:
-# $ sudo ./run.sh install full
-# $ sudo VERSION=0.4.0 ./run.sh install
+# Usage:
+# ------
+# curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+#     | sudo bash -s -- [COMMAND]
 #
-# Example web usage:
+# Examples:
+# --------
 # $ curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
 #   | sudo bash -s -- install full
 #
@@ -44,6 +46,7 @@ fi
 
 echo "[+] Using temporary directory $TMP_DIR."
 trap 'rm -rf -- "$TMP_DIR" && echo "[+] Temporary directory $TMP_DIR wiped."' EXIT
+
 cd "$TMP_DIR"
 
 download_url=""
@@ -70,6 +73,6 @@ curl $CURL_FLAGS -o "$NAME.tar.gz" "$download_url"
 
 mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
-
 cd unpacked
+
 ./"$SCRIPT_NAME" "$@"
