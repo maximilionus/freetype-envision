@@ -2,7 +2,7 @@
 
 set -e
 
-
+NAME="freetype-envision"
 SRC_DIR=src
 VERSION="0.5.0"
 
@@ -60,7 +60,11 @@ __verify_ver () {
         source "$DEST_CONF_DIR/$DEST_STATE_FILE"
 
         if [[ ${state[version]} != $VERSION ]]; then
-            echo "Manually installed project of a previous or newer version already exists on the system. Remove it with a script from the version corresponding to the installed one." | fold -sw 80
+            cat <<EOF
+Manually installed project of a previous or newer version already exists on the
+system. Remove it with a script from the version corresponding to the installed
+one.
+EOF
             exit 1
         fi
 
@@ -68,30 +72,35 @@ __verify_ver () {
     else
         if [[ -f $DEST_PROFILED_FILE ]]; then
             # Project files exist on the taget system, but no state file
-            echo "Project is already installed on the system, probably with package manager or an installation script for the version below '0.5.0'. Remove it using the original installation method." | fold -sw 80
+            cat <<EOF
+Project is already installed on the system, probably with package manager or an
+installation script for the version below '0.5.0'. Remove it using the original
+installation method.
+EOF
             exit 1
         fi
     fi
 }
 
 show_header () {
-    echo "FreeType Envision, version $VERSION"
+    echo "$NAME, version $VERSION"
 }
 
 show_help () {
-    echo "Usage: $0 [COMMAND]"
-    echo
-    echo "COMMANDS:"
-    echo "  install <mode>     : Install the project."
-    echo "  remove             : Remove the installed project."
-    echo "  help               : Show this help message."
-    echo "OPTIONS:"
-    echo "  mode (optional)    : 'normal' (default),"
-    echo "                       'full'."
-    echo "ENV:"
-    echo "  STORE_STATE <bool> : Storing the manual (from script) installation info on"
-    echo "                       target system. (true by default)"
-    exit 0
+    cat <<EOF
+Usage: $0 [COMMAND]
+
+COMMANDS:
+  install <mode>     : Install the project.
+  remove             : Remove the installed project.
+  help               : Show this help message.
+OPTIONS:
+  mode (optional)    : 'normal' (default),
+                       'full'.
+ENV:
+  STORE_STATE <bool> : Storing the manual (from script) installation info on
+                       target system. (true by default)
+EOF
 }
 
 project_install () {
@@ -118,8 +127,11 @@ project_install () {
     if [[ $STORE_STATE = true ]]; then
         echo "--> Storing installation info to '$DEST_CONF_DIR/$DEST_STATE_FILE':"
         mkdir -pv "$DEST_CONF_DIR"
-        echo "state[version]='$VERSION'" | tee "$DEST_CONF_DIR/$DEST_STATE_FILE"
-        echo "state[mode]='$g_selected_mode'" | tee -a "$DEST_CONF_DIR/$DEST_STATE_FILE"
+
+        tee "$DEST_CONF_DIR/$DEST_STATE_FILE" <<EOF
+state[version]='$VERSION'
+state[mode]='$g_selected_mode'
+EOF
     fi
 
     echo "-> Success! Reboot to apply the changes."
