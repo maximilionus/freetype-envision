@@ -41,16 +41,15 @@ __require_root () {
 __verify_mode () {
     local sel_mode="${1:-normal}"
 
-    if [[ $sel_mode == "normal" ]]; then
-        g_selected_mode=$sel_mode
-        echo "-> \"Normal\" mode selected."
-    elif [[ $sel_mode == "full" ]]; then
-        g_selected_mode=$sel_mode
-        echo "-> \"Full\" mode selected."
-    else
-        echo "Wrong mode, stopping."
-        exit 1
-    fi
+    case $sel_mode in
+        normal|full)
+            g_selected_mode=$sel_mode
+            echo "-> Mode '$g_selected_mode' selected."
+            ;;
+        *)
+            echo "Wrong mode provided."
+            exit 1
+    esac
 }
 
 __verify_ver () {
