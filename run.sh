@@ -37,7 +37,7 @@ echo "Web wrapper for $NAME."
 
 TMP_DIR=$( mktemp -d )
 
-if [ ! -d "$TMP_DIR" ]; then
+if [[ ! -d $TMP_DIR ]]; then
     echo "[!] Failed to initialize temporary directory."
     exit 1
 fi
@@ -47,7 +47,7 @@ trap 'rm -rf -- "$TMP_DIR" && echo "[+] Temporary directory $TMP_DIR wiped."' EX
 cd "$TMP_DIR"
 
 download_url=""
-if [ -z "$VERSION" ]; then
+if [[ -z $VERSION ]]; then
     echo "[+] Preparing the latest release."
 
     download_url=$(curl $CURL_FLAGS "$DOWNLOAD_LATEST_URL"  \
