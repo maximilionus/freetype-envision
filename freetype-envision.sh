@@ -64,6 +64,8 @@ __verify_ver () {
 Manually installed project of a previous or newer version already exists on the
 system. Remove it with a script from the version corresponding to the installed
 one.
+
+Detected version: '${state[version]}'.
 EOF
             exit 1
         fi
@@ -71,7 +73,9 @@ EOF
         unset state
     else
         if [[ -f $DEST_PROFILED_FILE ]]; then
-            # Project files exist on the taget system, but no state file
+            # Project files exist on the taget system, but no state file.
+            # ? Checking only for one profile.d script should be enough, but
+            #   something weird may happen. Anyway... ( ͡° ͜ʖ ͡°)
             cat <<EOF
 Project is already installed on the system, probably with package manager or an
 installation script for the version below '0.5.0'. Remove it using the original
