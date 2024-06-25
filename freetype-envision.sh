@@ -15,7 +15,7 @@ DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 # fontconfig
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
-#                     ("<NAME>" "<PRIORITY>")
+#                    ("<NAME>" "<PRIORITY>")
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
