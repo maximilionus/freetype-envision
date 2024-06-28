@@ -28,7 +28,8 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare g_selected_mode
+declare g_selected_mode # Selected project mode
+declare -A g_state      # Associative array to store values from state file
 
 
 __require_root () {
@@ -38,6 +39,7 @@ __require_root () {
     fi
 }
 
+# Check if the provided by user mode is valid and assign it globally
 __verify_mode () {
     local sel_mode="${1:-normal}"
 
@@ -52,19 +54,34 @@ __verify_mode () {
     esac
 }
 
+# Load the local state file into global var safely, allowing only the valid
+# values to be parsed.
+__load_state_file () {
+    while read -r line; do
+        if [[ $line =~ ^state\[([a-zA-Z0-9_]+)\]=\'?([^\']*)\'?$ ]]; then
+            # Only allow "state[key]='value'"
+            local key="${BASH_REMATCH[1]}"
+            local value="${BASH_REMATCH[2]}"
+            g_state["$key"]="$value"
+        else
+            echo "Warning: Skipping invalid state file line '$line'" >&2
+        fi
+    done < "$DEST_CONF_DIR/$DEST_STATE_FILE"
+}
+
+# Check the state file values to decide if user is allowed to install the project
 __verify_ver () {
     if [[ -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         # State file exists, checking if the version is same
-        declare -A state  # Kind of a namespace to store state vars
-        source "$DEST_CONF_DIR/$DEST_STATE_FILE"
+        __load_state_file
 
-        if [[ ${state[version]} != $VERSION ]]; then
+        if [[ ${g_state[version]} != $VERSION ]]; then
             cat <<EOF
 Manually installed project of a previous or newer version already exists on the
 system. Remove it with a script from the version corresponding to the installed
 one.
 
-Detected version: '${state[version]}'.
+Detected version: '${g_state[version]}'.
 EOF
             exit 1
         fi
