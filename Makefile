@@ -1,6 +1,6 @@
 NAME=freetype-envision
 PACKAGE_NAME=$(NAME)-$(VERSION)
-VERSION=0.5.0
+VERSION=0.6.0
 ARCHIVE_FMT=.tar.gz
 BUILD_DIR=build
 DIST_DIR=dist

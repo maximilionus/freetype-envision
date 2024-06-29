@@ -1,3 +1,7 @@
+## Release 0.6.0
+- Secure state file load in manual management script.
+
+
 ## Release 0.5.0
 - New fontconfig rule to reject the usage of *Droid Sans* font family for
   Japanese and Chinese ([Issue #1](https://github.com/maximilionus/freetype-envision/issues/1)).

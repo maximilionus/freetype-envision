@@ -3,7 +3,7 @@
 
 
 Name:           %{base_name}
-Version:        0.5.0
+Version:        0.6.0
 Release:        1%{?dist}
 BuildArch:      noarch
 Summary:        FreeType font rendering library adjustments to improve visibility on the Linux platform, %{variation} preset
@@ -51,6 +51,9 @@ install -m 644 fontconfig/freetype-envision-droid-sans.conf %{buildroot}/%{_sysc
 
 
 %changelog
+* Sat Jun 29 2024 maximilionus <maximilionuss@gmail.com>
+- Update to version 0.6.0
+
 * Tue Jun 26 2024 maximilionus <maximilionuss@gmail.com>
 - Update to version 0.5.0
 
