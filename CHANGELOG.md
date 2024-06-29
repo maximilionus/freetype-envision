@@ -1,7 +1,7 @@
 ## Release 0.6.0
 - Secure state file load in manual management script.
 > Parser will ensure that loaded values are safe and does not contain any
-out-of-scope calls. The script needs to be run with root privileges and fully
+out-of-scope calls. The script must be run with root privileges and fully
 sourcing the contents of an external file may lead to malicious behavior.
 
 
