@@ -6,16 +6,11 @@ Carefully tuned adjustments for the font rendering software library
 You can find demo images to compare the changes
 [here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
 
-### What this project does
-- Modify all calls to the FreeType library through publicly documented
-  environmental variables.
+### Overall
 - Improve the visibility of medium and small-sized fonts by utilizing the
-  disabled by default 'stem-darkening' feature.
+  disabled by default FreeType 'stem-darkening' feature.
 - Use additional fontconfig rules to prepare the environment for all the new
-  FreeType features and modify priority for some font families.
-
-### What this project does not
-- Install or remove any font.
+  FreeType features.
 
 
 ## Install
