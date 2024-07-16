@@ -102,9 +102,30 @@ options, at the cost of severe distortions in the rendering of some elements.
 
 ## Notes
 ### GNOME DE
-GNOME users should consider changing the default system-ui font *Cantarell* to
-any other similar font that doesn't render with the `cff` engine. `cff` engine
-hinting is broken, making the fonts look very distorted after stem-darkening.
+#### Antialiasing
+While GNOME does use the grayscale antialiasing method by default, there are a
+few Linux distributions that change this setting to the subpixel method, making
+the font rendering appear incorrect after the tweaks from this project.
+
+This issue is
+[already tracked](https://github.com/maximilionus/freetype-envision/issues/7),
+but manual user intervention is still required for now. You can enable the
+grayscale antialiasing method by executing the command below:
+
+```sh
+gsettings set org.gnome.desktop.interface font-antialiasing grayscale
+```
+
+To reset the changes:
+
+```sh
+gsettings reset org.gnome.desktop.interface font-antialiasing
+```
+
+#### Fonts
+GNOME users should consider changing the default interface font *Cantarell* to
+any other similar font that doesn't render with the `cff` engine. Hinting in
+`cff` engine is broken, making the fonts look very distorted after emboldening.
 
 Changing the fonts is possible through the `gnome-tweaks` utility.
 
