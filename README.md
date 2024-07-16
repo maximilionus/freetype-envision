@@ -22,11 +22,7 @@ $ sudo dnf copr enable maximilionus/freetype-envision
 ```
 2. Install with:
 ```sh
-# Normal mode
 $ sudo dnf install freetype-envision
-
-# Full mode
-$ sudo dnf install freetype-envision-full
 ```
 3. Reboot to apply the changes.
 
@@ -38,13 +34,7 @@ $ sudo dnf install freetype-envision-full
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required:
 ```sh
-# Normal mode:
 $ sudo ./freetype-envision.sh install
-# or
-$ sudo ./freetype-envision.sh install normal
-
-# Full mode:
-$ sudo ./freetype-envision.sh install full
 ```
 4. Reboot to apply the changes.
 
@@ -62,32 +52,11 @@ $ sudo ./freetype-envision.sh remove
 
 
 ## Details
-Currently, there are several configuration presets with different levels of
-safety. **Normal** preset is considered least likely to cause visual errors in
-the user's environment and is therefore used by default, while the **Full** one
-tries to maximize the readability of the rendering for all the font drivers and
-options, at the cost of severe distortions in the rendering of some elements.
-
-
 - Configurations in profile.d:
-   - Stem-darkening (embolden) for drivers:
+   - Stem-darkening (embolden) for `autofitter`, `type1`, `t1cid` and `cff`
+   drivers.
    > This feature improves visibility of the medium and small sized-fonts.
    > Especially helpful for the LowPPI displays.
-
-     | Driver       | Normal | Full |
-     | :----------- | :----: | :--: |
-     | `autofitter` | Yes    | Yes  |
-     | `type1`      | Yes    | Yes  |
-     | `t1cid`      | Yes    | Yes  |
-     | `cff`        | Yes    | Yes  |
-
-   - Stem-darkening enabled for the small font sizes in `autofitter` driver:
-   > Darkening for small sized fonts with `autofitter` driver in **Normal**
-   > mode is disabled to avoid various rare distortions in the font rendering
-
-     | Normal | Full |
-     | :----: | :--: |
-     | No     | Yes  |
 
 - Configurations in fontconfig:
    - Enforce grayscale antialiasing (disable sub-pixel).
