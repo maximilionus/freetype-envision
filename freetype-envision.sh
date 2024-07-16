@@ -4,12 +4,11 @@ set -e
 
 NAME="freetype-envision"
 SRC_DIR=src
-VERSION="0.6.0"
+VERSION="0.7.0"
 
 # profile.d
 PROFILED_DIR="$SRC_DIR/profile.d"
-PROFILED_NORMAL="freetype-envision-normal.sh"
-PROFILED_FULL="freetype-envision-full.sh"
+PROFILED_SCRIPT="freetype-envision.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
 
 # fontconfig
@@ -28,7 +27,6 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare g_selected_mode # Selected project mode
 declare -A g_state      # Associative array to store values from state file
 
 
@@ -37,21 +35,6 @@ __require_root () {
         echo "This action requires the root privileges"
         exit 1
     fi
-}
-
-# Check if the provided by user mode is valid and assign it globally
-__verify_mode () {
-    local sel_mode="${1:-normal}"
-
-    case $sel_mode in
-        normal|full)
-            g_selected_mode=$sel_mode
-            echo "-> Mode '$g_selected_mode' selected."
-            ;;
-        *)
-            echo "Wrong mode provided."
-            exit 1
-    esac
 }
 
 # Load the local state file into global var safely, allowing only the valid
@@ -111,12 +94,10 @@ show_help () {
 Usage: $0 [COMMAND]
 
 COMMANDS:
-  install <mode>     : Install the project.
+  install            : Install the project.
   remove             : Remove the installed project.
   help               : Show this help message.
-OPTIONS:
-  mode (optional)    : 'normal' (default),
-                       'full'.
+
 ENV:
   STORE_STATE <bool> : Storing the manual (from script) installation info on
                        target system. (true by default)
@@ -129,11 +110,7 @@ project_install () {
     __require_root
 
     echo "--> Installing the profile.d scripts:"
-    if [[ $g_selected_mode == "normal" ]]; then
-        install -v -m 644 "$PROFILED_DIR/$PROFILED_NORMAL" "$DEST_PROFILED_FILE"
-    elif [[ $g_selected_mode == "full" ]]; then
-        install -v -m 644 "$PROFILED_DIR/$PROFILED_FULL" "$DEST_PROFILED_FILE"
-    fi
+    install -v -m 644 "$PROFILED_DIR/$PROFILED_SCRIPT" "$DEST_PROFILED_FILE"
 
     echo "--> Installing the fontconfig configurations:"
     install -v -m 644 \
@@ -184,20 +161,31 @@ show_header
 
 # Deprecate short commands.
 # ! Remove on 1.0.0
-case $arg_1 in
+case "$1" in
     i|r|h)
         cat <<EOF
 --------
-Warning: Argument '$1', short command, is considered deprecated and will be
-removed in '1.0.0' project release.
+Warning: Argument '$1' (short command) is considered deprecated from version
+'0.5.0' and will be removed in '1.0.0' project release.
 --------
 EOF
         ;;
 esac
 
-case $arg_1 in
+if [[ $2 =~ ^(normal|full)$ ]]; then
+    cat <<EOF
+--------
+Warning: Argument '$2' (mode selection) is considered deprecated from version
+'0.7.0' and will be removed in '1.0.0' project release.
+
+There are now only one mode available, please avoid providing the second
+argument.
+--------
+EOF
+fi
+
+case $1 in
     i|install)
-        __verify_mode $arg_2
         project_install
         ;;
     r|remove)
