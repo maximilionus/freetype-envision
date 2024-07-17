@@ -181,8 +181,8 @@ case "$1" in
     i|r|h)
         cat <<EOF
 --------
-Warning: Argument '$1' (short command) is considered deprecated from version
-'0.5.0' and will be removed in '1.0.0' project release.
+Warning: Arguments 'i', 'r' and 'h' (short commands) are considered deprecated
+from version '0.5.0' and will be removed in '1.0.0' project release.
 --------
 EOF
         ;;
@@ -191,8 +191,8 @@ esac
 if [[ $2 =~ ^(normal|full)$ ]]; then
     cat <<EOF
 --------
-Warning: Argument '$2' (mode selection) is considered deprecated from version
-'0.7.0' and will be removed in '1.0.0' project release.
+Warning: Arguments 'normal' and 'full' (mode selection) are considered
+deprecated from version '0.7.0' and will be removed in '1.0.0' project release.
 
 There are now only one mode available, please avoid providing the second
 argument.
