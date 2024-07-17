@@ -27,19 +27,43 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare -A g_state      # Associative array to store values from state file
+declare -A g_state  # Associative array to store values from state file
 
 
 __require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-        echo "This action requires the root privileges"
+        echo "This action requires the root privileges."
         exit 1
     fi
+}
+
+__write_state_file () {
+    if [[ $STORE_STATE = false ]]; then
+        echo "Note: State file feature disabled."
+        return 1
+    fi
+
+    echo "--> Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE':"
+    mkdir -pv "$DEST_CONF_DIR"
+
+    tee "$DEST_CONF_DIR/$DEST_STATE_FILE" <<EOF
+state[version]='$VERSION'
+EOF
 }
 
 # Load the local state file into global var safely, allowing only the valid
 # values to be parsed.
 __load_state_file () {
+    if [[ $STORE_STATE = false ]]; then
+        echo "Note: State file feature disabled."
+        return 1
+    fi
+
+    if [[ ! -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
+        echo "Note: No state file detected on system."
+        return 1
+    fi
+
     while read -r line; do
         if [[ $line =~ ^state\[([a-zA-Z0-9_]+)\]=\'?([^\']*)\'?$ ]]; then
             # Only allow "state[key]='value'"
@@ -121,15 +145,7 @@ project_install () {
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    if [[ $STORE_STATE = true ]]; then
-        echo "--> Storing installation info to '$DEST_CONF_DIR/$DEST_STATE_FILE':"
-        mkdir -pv "$DEST_CONF_DIR"
-
-        tee "$DEST_CONF_DIR/$DEST_STATE_FILE" <<EOF
-state[version]='$VERSION'
-state[mode]='$g_selected_mode'
-EOF
-    fi
+    __write_state_file
 
     echo "-> Success! Reboot to apply the changes."
 }
