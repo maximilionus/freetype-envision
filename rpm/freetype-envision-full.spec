@@ -3,8 +3,8 @@
 
 
 Name:           %{base_name}-%{variation}
-Version:        0.6.0
-Release:        2%{?dist}
+Version:        0.7.0
+Release:        1%{?dist}
 BuildArch:      noarch
 Summary:        FreeType font rendering library adjustments to improve visibility on the Linux platform, %{variation} preset
 
@@ -25,7 +25,7 @@ Carefully tuned adjustments for the font rendering software library FreeType, de
 
 Full preset tries to maximize the readability of the rendering for all the font drivers and options, at the cost of severe distortions in the rendering of some elements.
 
-This version is deprecated, please use the main 'freetype-envision' package to get all the latest features.
+This version is deprecated and will be removed on version 1.0.0 release. Please use the main 'freetype-envision' package to get all the latest features.
 
 
 %prep
@@ -54,8 +54,8 @@ install -m 644 fontconfig/freetype-envision-droid-sans.conf %{buildroot}/%{_sysc
 
 
 %changelog
-* Wed Jul 17 2024 maximilionus <maximilionuss@gmail.com>
-- Deprecate the package
+* Fri Jul 19 2024 maximilionus <maximilionuss@gmail.com>
+- Deprecate the package. Maintenance update.
 
 * Sat Jun 29 2024 maximilionus <maximilionuss@gmail.com>
 - Update to version 0.6.0
