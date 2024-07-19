@@ -134,7 +134,17 @@ project_install () {
     __require_root
 
     echo "--> Installing the profile.d scripts:"
-    install -v -m 644 "$PROFILED_DIR/$PROFILED_SCRIPT" "$DEST_PROFILED_FILE"
+    if [[ $2 == "full" ]]; then
+        # Handle deprecated 'full' mode install.
+        # TODO: Remove in 1.0.0
+        install -v -m 644 \
+            "$PROFILED_DIR/freetype-envision-full.sh" \
+            "$DEST_PROFILED_FILE"
+    else
+        install -v -m 644 \
+            "$PROFILED_DIR/$PROFILED_SCRIPT" \
+            "$DEST_PROFILED_FILE"
+    fi
 
     echo "--> Installing the fontconfig configurations:"
     install -v -m 644 \
@@ -176,7 +186,7 @@ arg_2="$2"
 show_header
 
 # Deprecate short commands.
-# ! Remove on 1.0.0
+# TODO: Remove in 1.0.0
 case "$1" in
     i|r|h)
         cat <<EOF
@@ -202,7 +212,9 @@ fi
 
 case $1 in
     i|install)
-        project_install
+        # $2 (modes) are deprecated
+        # TODO: Remove in '1.0.0'
+        project_install $2
         ;;
     r|remove)
         project_remove
