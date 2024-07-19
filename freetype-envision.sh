@@ -134,7 +134,7 @@ project_install () {
     __require_root
 
     echo "--> Installing the profile.d scripts:"
-    if [[ $2 == "full" ]]; then
+    if [[ $1 == "full" ]]; then
         # Handle deprecated 'full' mode install.
         # TODO: Remove in 1.0.0
         install -v -m 644 \
@@ -180,9 +180,6 @@ project_remove () {
 
 
 # Main logic below
-arg_1="$1"
-arg_2="$2"
-
 show_header
 
 # Deprecate short commands.
@@ -198,6 +195,8 @@ EOF
         ;;
 esac
 
+# Deprecate project modes
+# TODO: Remove in 1.0.0
 if [[ $2 =~ ^(normal|full)$ ]]; then
     cat <<EOF
 --------
@@ -213,7 +212,7 @@ fi
 case $1 in
     i|install)
         # $2 (modes) are deprecated
-        # TODO: Remove in '1.0.0'
+        # TODO: Remove in 1.0.0
         project_install $2
         ;;
     r|remove)
