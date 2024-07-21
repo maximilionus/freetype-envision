@@ -99,8 +99,8 @@ any other similar font that doesn't render with the `cff` engine. Hinting in
 Changing the fonts is possible through the `gnome-tweaks` utility.
 
 Fonts to consider:
-- Inter (size: `10.5pt`)
-- Noto Sans (size: `10.5pt`)
+- Inter *(size: `10.5pt`)*
+- Noto Sans *(size: `10.5pt`)*
 
 
 ## Build
