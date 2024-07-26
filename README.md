@@ -18,11 +18,11 @@ You can find demo images to compare the changes
 ### Fedora, RHEL
 1. Enable the **copr** repository:
    ```sh
-   $ sudo dnf copr enable maximilionus/freetype-envision
+   sudo dnf copr enable maximilionus/freetype-envision
    ```
 2. Install with:
    ```sh
-   $ sudo dnf install freetype-envision
+   sudo dnf install freetype-envision
    ```
 3. Reboot to apply the changes.
 
@@ -34,14 +34,14 @@ You can find demo images to compare the changes
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required:
    ```sh
-   $ sudo ./freetype-envision.sh install
+   sudo ./freetype-envision.sh install
    ```
 4. Reboot to apply the changes.
 
 #### Uninstall
 1. Run the command below, root required:
    ```sh
-   $ sudo ./freetype-envision.sh remove
+   sudo ./freetype-envision.sh remove
    ```
 2. Reboot to apply the changes.
 
