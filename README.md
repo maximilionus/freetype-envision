@@ -7,11 +7,8 @@ You can find demo images to compare the changes
 [here](https://github.com/maximilionus/freetype-envision/wiki/Comparison).
 
 ### Overall
-- Improve the visibility of medium and small-sized fonts by utilizing the
-  disabled by default FreeType 'stem-darkening' feature.
-- Use additional fontconfig rules to prepare the environment for all the new
-  FreeType features.
-
+- Improve the visibility of medium and small-sized fonts.
+- Prepare the font environment for the new features.
 
 ## Install
 
