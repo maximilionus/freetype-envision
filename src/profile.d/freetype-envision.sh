@@ -1,9 +1,11 @@
 # Embolden small and medium sized fonts to make them easier to read.
+#
+# Includes the safe font drivers tweaks, with stem-darkening disabled for the
+# small font sizes in autofitter driver.
+#
 # Official docs:
 # - https://freetype.org/freetype2/docs/reference/ft2-properties.html#no-stem-darkening
-#
-# Normal version includes only the safe tweaks to the font drivers, with
-# stem-darkening disabled for the small font sizes in autofitter driver.
+
 export FREETYPE_PROPERTIES=\
 "autofitter:no-stem-darkening=0\
  autofitter:darkening-parameters=500,0,1000,400,1500,400,2333,0\

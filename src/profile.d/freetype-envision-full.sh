@@ -1,12 +1,13 @@
 # -------
-# Warning: This is a deprecated feature, that will be removed in version
-# '1.0.0'.
+# Warning: This is a deprecated feature, that will be removed in version 1.0.0
 # -------
+#
 # Embolden small and medium sized fonts to make them easier to read.
 # Official docs:
 # - https://freetype.org/freetype2/docs/reference/ft2-properties.html#no-stem-darkening
 #
 # Full version includes all the possible tweaks to all the font drivers.
+
 export FREETYPE_PROPERTIES=\
 "autofitter:no-stem-darkening=0\
  autofitter:darkening-parameters=500,475,1000,400,1500,400,2333,0\
