@@ -210,14 +210,20 @@ EOF
 fi
 
 case $1 in
+    # "i" is deprecated
+    # TODO: Remove in 1.0.0
     i|install)
         # $2 (modes) are deprecated
         # TODO: Remove in 1.0.0
         project_install $2
         ;;
+    # "r" is deprecated
+    # TODO: Remove in 1.0.0
     r|remove)
         project_remove
         ;;
+    # "h" is deprecated
+    # TODO: Remove in 1.0.0
     h|help)
         show_help
         ;;
