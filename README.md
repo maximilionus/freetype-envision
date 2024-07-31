@@ -112,5 +112,6 @@ To create the release archive:
    ```sh
    $ make
    ```
-2. Final archive will be placed in `dist/` directory with name `freetype-envision-X.Y.Z.tar.gz`, where:
+2. Final archive will be placed in `dist/` directory with name
+   `freetype-envision-X.Y.Z.tar.gz`, where:
     - `X.Y.Z` stands for current version
