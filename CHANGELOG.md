@@ -1,10 +1,10 @@
 ## Release 0.7.0
-- **Full** project mode is now deprecated and modes separation has been
-removed. As most of the functionality is already included by default in
-**normal** mode - there is no point in keeping the **Full** preset anymore.
-Passing the mode arguments to the manual installation script will print out the
-warning message about deprecation and proceed with the default (normal mode)
-installation.
+- **Full** project mode is now deprecated. There is no point in keeping  the
+  **full** preset anymore, as most of the functionality is  already included by
+  default in **normal** mode. Passing the mode arguments to the manual
+  installation script will print out the warning message about deprecation and
+  proceed with the selected mode installation. **Full** mode will be available
+  for installation until the `1.0.0` release, but is no longer maintained.
 
 
 ## Release 0.6.0
