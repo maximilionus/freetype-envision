@@ -32,7 +32,7 @@ declare g_state_file_content="state[version]='$VERSION'"
 
 
 __require_root () {
-    if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    if [[ $(/usr/bin/id -u) != 0 ]]; then
         echo "This action requires the root privileges."
         exit 1
     fi
@@ -80,7 +80,7 @@ __append_state_file () {
     key="$1"
     value="$2"
 
-    g_state_file_content="${g_state_file_content}\nstate[$key]='$value'"
+    g_state_file_content=$(echo -e "$g_state_file_content\nstate[$key]='$value'")
 }
 
 # Check the state file values to decide if user is allowed to install the project
@@ -117,8 +117,7 @@ EOF
 }
 
 __install_gnome_specific () {
-    # TODO: "XDG*" variables are not accessible from sudo run!
-    if [[ "${XDG_CURRENT_DESKTOP}" != "GNOME" ]]; then
+    if [[ $XDG_CURRENT_DESKTOP != "GNOME" ]]; then
         # Avoid function exec if different DE detected
         return 0
     fi
@@ -135,6 +134,11 @@ __install_gnome_specific () {
     if [[ $user_aa_mode != "grayscale" ]]; then
         __append_state_file "backup_gnome_font_aa" "$user_aa_mode"
         echo "Setting the font antialiasing method to grayscale"
+        # TODO: gsettings heavily relies on DBUS, so it DOES NOT work under
+        # sudo. I already hate this fucking automated tweaks idea of mine.
+        #
+        # And I also HAVE NO idea how to make it work under package manager
+        # installation method.
         gsettings set org.gnome.desktop.interface font-antialiasing grayscale
     fi
 }
