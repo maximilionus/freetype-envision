@@ -130,7 +130,7 @@ __install_gnome_specific () {
         return 0
     fi
 
-    user_aa_mode=$(gsettings get org.gnome.desktop.interface font-antialiasing)
+    user_aa_mode=$(gsettings get org.gnome.desktop.interface font-antialiasing | tr -d "'")
     if [[ $user_aa_mode != "grayscale" ]]; then
         __append_state_file "backup_gnome_font_aa" "$user_aa_mode"
         echo "Setting the font antialiasing method to grayscale"
