@@ -5,7 +5,6 @@ set -e
 NAME="freetype-envision"
 SRC_DIR=src
 VERSION="0.7.0"
-DEBUG="${DEBUG:-}"
 
 # profile.d
 PROFILED_DIR="$SRC_DIR/profile.d"
@@ -42,8 +41,7 @@ __require_root () {
 __write_state_file () {
     if [[ $STORE_STATE = false ]]; then
         echo "Note: State file feature disabled."
-        # TODO: THIS DOES NOT WORK WITH -e FLAG!
-        return 1
+        return 0
     fi
 
     echo "--> Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE':"
@@ -57,14 +55,12 @@ __write_state_file () {
 __load_state_file () {
     if [[ $STORE_STATE = false ]]; then
         echo "Note: State file feature disabled."
-        # TODO: THIS DOES NOT WORK WITH -e FLAG!
-        return 1
+        return 0
     fi
 
     if [[ ! -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         echo "Note: No state file detected on system."
-        # TODO: THIS DOES NOT WORK WITH -e FLAG!
-        return 1
+        return 0
     fi
 
     while read -r line; do
@@ -74,12 +70,9 @@ __load_state_file () {
             local value="${BASH_REMATCH[2]}"
             g_state["$key"]="$value"
         else
-            [[ $DEBUG ]] && \
-                echo "[DEBUG] Warning: Skipping invalid state file line '$line'"
+            echo "Warning: Skipping invalid state file line '$line'"
         fi
     done < "$DEST_CONF_DIR/$DEST_STATE_FILE"
-
-    [[ $DEBUG ]] && echo "[DEBUG] State file loaded."
 }
 
 # Append, but don't write the entry to the state file
@@ -88,9 +81,6 @@ __append_state_file () {
     value="$2"
 
     g_state_file_content="${g_state_file_content}\nstate[$key]='$value'"
-    [[ $DEBUG ]] && \
-        echo \
-        "[DEBUG] Appended the key '$key' with value '$value' to state file."
 }
 
 # Check the state file values to decide if user is allowed to install the project
@@ -127,10 +117,10 @@ EOF
 }
 
 __install_gnome_specific () {
-    if [[ $XDG_CURRENT_DESKTOP != "GNOME" ]]; then
+    # TODO: "XDG*" variables are not accessible from sudo run!
+    if [[ "${XDG_CURRENT_DESKTOP}" != "GNOME" ]]; then
         # Avoid function exec if different DE detected
-        # TODO: THIS DOES NOT WORK WITH -e FLAG!
-        return 1
+        return 0
     fi
 
     echo "GNOME Desktop Environment detected."
@@ -138,8 +128,7 @@ __install_gnome_specific () {
     if ! command -v gsettings &> /dev/null
     then
         echo "Warning: gsettings is unavailable in path, no tweaks applied."
-        # TODO: THIS DOES NOT WORK WITH -e FLAG!
-        return 1
+        return 0
     fi
 
     user_aa_mode=$(gsettings get org.gnome.desktop.interface font-antialiasing)
