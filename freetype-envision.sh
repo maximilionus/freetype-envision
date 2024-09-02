@@ -8,8 +8,8 @@ VERSION="0.7.0"
 
 # profile.d
 PROFILED_DIR="$SRC_DIR/profile.d"
-PROFILED_SCRIPT="freetype-envision.sh"
 DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
+PROFILED_SCRIPT="freetype-envision.sh"
 
 # fontconfig
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
@@ -17,6 +17,12 @@ DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 #                    ("<NAME>" "<PRIORITY>")
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
+
+# gschema overrides
+GSCHEMA_DIR="$SRC_DIR/gschema"
+GSCHEMA_DEST_DIR="/usr/share/glib-2.0/schemas"
+#                 ("<NAME>" "<PRIORITY>")
+GSCHEMA_GRAYSCALE=("freetype-envision_grayscale.gschema.override" 10)
 
 # Storing the manual (from script) installation info on target system.
 # Disable by setting the STORE_STATE env variable to false, but only do it when
@@ -163,7 +169,9 @@ project_install () {
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "--> Installing the DE specific tweaks:"
-    # TODO
+    install -v -m 644 \
+        "$GSCHEMA_DIR/${GSCHEMA_GRAYSCALE[0]}" \
+        "$GSCHEMA_DEST_DIR/${GSCHEMA_GRAYSCALE[1]}_${GSCHEMA_GRAYSCALE[0]}"
 
     __write_state_file
 
@@ -181,6 +189,9 @@ project_remove () {
     echo "--> Removing the fontconfig configurations:"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
+
+    echo "--> Removing the DE specific tweaks:"
+    rm -fv "$GSCHEMA_DEST_DIR/${GSCHEMA_GRAYSCALE[1]}_${GSCHEMA_GRAYSCALE[0]}"
 
     echo "--> Removing the configurations directory:"
     rm -rfv "$DEST_CONF_DIR"
