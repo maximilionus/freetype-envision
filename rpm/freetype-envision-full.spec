@@ -6,7 +6,7 @@ Name:           %{base_name}-%{variation}
 Version:        0.7.0
 Release:        1%{?dist}
 BuildArch:      noarch
-Summary:        FreeType font rendering library adjustments to improve visibility on the Linux platform, %{variation} preset
+Summary:        FreeType adjustments, designed to improve fonts visibility, %{variation} preset
 
 License:        BSD-2-Clause
 URL:            https://github.com/maximilionus/freetype-envision
