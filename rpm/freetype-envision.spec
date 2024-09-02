@@ -16,7 +16,7 @@ Obsoletes:      %{name}-normal
 
 
 %description
-Carefully tuned adjustments for the font rendering software library FreeType, designed to improve visibility and refine appearance on the Linux platform.
+Carefully tuned FreeType font rendering library adjustments, designed to improve fonts visibility on Linux platform.
 
 
 %prep

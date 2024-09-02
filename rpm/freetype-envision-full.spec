@@ -21,7 +21,7 @@ Conflicts:      %{base_name}
 
 
 %description
-Carefully tuned adjustments for the font rendering software library FreeType, designed to improve visibility and refine appearance on the Linux platform.
+Carefully tuned FreeType font rendering library adjustments, designed to improve fonts visibility on Linux platform.
 
 Full preset tries to maximize the readability of the rendering for all the font drivers and options, at the cost of severe distortions in the rendering of some elements.
 
