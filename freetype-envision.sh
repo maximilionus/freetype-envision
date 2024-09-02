@@ -75,7 +75,7 @@ __load_state_file () {
     done < "$DEST_CONF_DIR/$DEST_STATE_FILE"
 }
 
-# Append, but don't write the entry to the state file
+# Append the new entry to state file buffer, but don't write it to file
 __append_state_file () {
     key="$1"
     value="$2"
@@ -113,33 +113,6 @@ installation method.
 EOF
             exit 1
         fi
-    fi
-}
-
-__install_gnome_specific () {
-    if [[ $XDG_CURRENT_DESKTOP != "GNOME" ]]; then
-        # Avoid function exec if different DE detected
-        return 0
-    fi
-
-    echo "GNOME Desktop Environment detected."
-
-    if ! command -v gsettings &> /dev/null
-    then
-        echo "Warning: gsettings is unavailable in path, no tweaks applied."
-        return 0
-    fi
-
-    user_aa_mode=$(gsettings get org.gnome.desktop.interface font-antialiasing | tr -d "'")
-    if [[ $user_aa_mode != "grayscale" ]]; then
-        __append_state_file "backup_gnome_font_aa" "$user_aa_mode"
-        echo "Setting the font antialiasing method to grayscale"
-        # TODO: gsettings heavily relies on DBUS, so it DOES NOT work under
-        # sudo. I already hate this fucking automated tweaks idea of mine.
-        #
-        # And I also HAVE NO idea how to make it work under package manager
-        # installation method.
-        gsettings set org.gnome.desktop.interface font-antialiasing grayscale
     fi
 }
 
@@ -190,7 +163,7 @@ project_install () {
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "--> Installing the DE specific tweaks:"
-    __install_gnome_specific
+    # TODO
 
     __write_state_file
 
