@@ -4,7 +4,7 @@ Carefully tuned adjustments for the font rendering software library
 **Linux** platform.
 
 You can find demo images to compare the changes
-[here](https://drive.google.com/drive/folders/1gPoAsNOPaaACBdEX2YEvlK0cw5miBfOd?usp=sharing).
+[here](https://github.com/maximilionus/freetype-envision/wiki/Comparison).
 
 ### Overall
 - Improve the visibility of medium and small-sized fonts by utilizing the
