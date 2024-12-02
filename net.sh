@@ -8,16 +8,16 @@
 #
 # Usage:
 # ------
-# curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
-#     | sudo bash -s -- [COMMAND]
+# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+#       | sudo bash -s -- [COMMAND]
 #
 # Examples:
 # --------
-# $ curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
-#   | sudo bash -s -- install full
+# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+#       | sudo bash -s -- install
 #
-# $ curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
-#   | sudo VERSION=0.2.0 bash -s -- install full
+# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+#       | sudo VERSION=0.2.0 bash -s -- install full
 
 set -e
 
