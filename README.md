@@ -9,18 +9,29 @@ Compare the changes
 - Improve the visibility of medium and small-sized fonts.
 - Prepare the font environment for the new features.
 
-## Install
 
-### Fedora, RHEL
-1. Enable the **copr** repository:
-   ```sh
-   sudo dnf copr enable maximilionus/freetype-envision
-   ```
-2. Install with:
-   ```sh
-   sudo dnf install freetype-envision
-   ```
-3. Reboot to apply the changes.
+## Usage
+### Net
+#### Install
+Ensure that `curl` is available in your system and execute the command below to install the project:
+
+```sh
+curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+    | sudo bash -s -- install
+```
+
+> You can also specify the version of project you want to use by declaring the
+> `VERSION` environmental variable:
+> ```sh
+> curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+>     | sudo VERSION="0.2.0" bash -s -- install full
+> ```
+
+#### Remove
+```sh
+curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+    | sudo bash -s -- remove
+```
 
 ### Manual
 #### Install
@@ -34,7 +45,7 @@ Compare the changes
    ```
 4. Reboot to apply the changes.
 
-#### Uninstall
+#### Remove
 1. Run the command below, root required:
    ```sh
    sudo ./freetype-envision.sh remove
@@ -42,8 +53,8 @@ Compare the changes
 2. Reboot to apply the changes.
 
 #### Upgrade
-1. Follow the **uninstall procedure** using the script exactly the version of
-   the project that is installed in the system.
+1. Follow the **remove procedure** using the script exactly the version of the
+   project that is installed in the system.
 2. Download the new version and proceed with **install procedure**.
 
 
