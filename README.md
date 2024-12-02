@@ -16,20 +16,20 @@ Compare the changes
 Ensure that `curl` is available in your system and execute the command below to install the project:
 
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
     | sudo bash -s -- install
 ```
 
 > You can also specify the version of project you want to use by declaring the
 > `VERSION` environmental variable:
 > ```sh
-> curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+> curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
 >     | sudo VERSION="0.2.0" bash -s -- install full
 > ```
 
 #### Remove
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/run.sh \
+curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
     | sudo bash -s -- remove
 ```
 
