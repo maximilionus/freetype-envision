@@ -30,14 +30,14 @@ DEST_STATE_FILE="state"
 declare -A g_state  # Associative array to store values from state file
 
 
-__require_root () {
+require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
         echo "This action requires the root privileges."
         exit 1
     fi
 }
 
-__write_state_file () {
+write_state_file () {
     if [[ $STORE_STATE = false ]]; then
         echo "Note: State file feature disabled."
         return 1
@@ -53,7 +53,7 @@ EOF
 
 # Load the local state file into global var safely, allowing only the valid
 # values to be parsed.
-__load_state_file () {
+load_state_file () {
     if [[ $STORE_STATE = false ]]; then
         echo "Note: State file feature disabled."
         return 1
@@ -77,10 +77,10 @@ __load_state_file () {
 }
 
 # Check the state file values to decide if user is allowed to install the project
-__verify_ver () {
+verify_ver () {
     if [[ -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         # State file exists, checking if the version is same
-        __load_state_file
+        load_state_file
 
         if [[ ${g_state[version]} != $VERSION ]]; then
             cat <<EOF
@@ -130,8 +130,8 @@ EOF
 
 project_install () {
     echo "-> Begin project install."
-    __verify_ver
-    __require_root
+    verify_ver
+    require_root
 
     echo "--> Installing the profile.d scripts:"
     install -v -m 644 \
@@ -147,15 +147,15 @@ project_install () {
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    __write_state_file
+    write_state_file
 
     echo "-> Success! Reboot to apply the changes."
 }
 
 project_remove () {
     echo "-> Begin project removal."
-    __verify_ver
-    __require_root
+    verify_ver
+    require_root
 
     echo "--> Removing the profile.d scripts:"
     rm -fv "$DEST_PROFILED_FILE"
