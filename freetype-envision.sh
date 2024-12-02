@@ -134,17 +134,9 @@ project_install () {
     __require_root
 
     echo "--> Installing the profile.d scripts:"
-    if [[ $1 == "full" ]]; then
-        # Handle deprecated 'full' mode install.
-        # TODO: Remove in 1.0.0
-        install -v -m 644 \
-            "$PROFILED_DIR/freetype-envision-full.sh" \
-            "$DEST_PROFILED_FILE"
-    else
-        install -v -m 644 \
-            "$PROFILED_DIR/$PROFILED_SCRIPT" \
-            "$DEST_PROFILED_FILE"
-    fi
+    install -v -m 644 \
+        "$PROFILED_DIR/$PROFILED_SCRIPT" \
+        "$DEST_PROFILED_FILE"
 
     echo "--> Installing the fontconfig configurations:"
     install -v -m 644 \
