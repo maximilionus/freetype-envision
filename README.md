@@ -7,7 +7,7 @@ Compare the changes
 
 ### Overall
 - Improve the visibility of medium and small-sized fonts.
-- Prepare the font environment for the new features.
+- Prepare the font environment to work correctly with the new features.
 
 
 ## Usage
