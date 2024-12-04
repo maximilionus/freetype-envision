@@ -6,6 +6,9 @@ NAME="freetype-envision"
 SRC_DIR=src
 VERSION="0.7.0"
 
+# Display the header with project name and version on start
+SHOW_HEADER=${SHOW_HEADER:=true}
+
 # environment
 ENVIRONMENT_SCRIPT="$SRC_DIR/environment/freetype-envision.sh"
 DEST_ENVIRONMENT="/etc/environment"
@@ -17,7 +20,7 @@ DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
-# Storing the manual (from script) installation info on target system.
+# Storing the manual (from script) installation info on target system
 DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
@@ -27,7 +30,16 @@ declare -A g_state  # Associative array to store values from state file
 
 require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-        echo "This action requires the root privileges."
+        echo "This action requires the root privileges"
+
+        if ! command -v sudo 2>&1 >/dev/null
+        then
+            echo "Can not self-elevate script privileges due to missing" \
+                 "'sudo' in system"
+            exit 1
+        fi
+
+        exec sudo SHOW_HEADER=false "$SHELL" "$0" "$@"
         exit 1
     fi
 }
@@ -151,7 +163,7 @@ project_remove () {
 
 
 # Main logic below
-show_header
+if $SHOW_HEADER; then show_header; fi
 
 # Deprecate short commands.
 # TODO: Remove in 1.0.0
