@@ -6,10 +6,9 @@ NAME="freetype-envision"
 SRC_DIR=src
 VERSION="0.7.0"
 
-# profile.d
-PROFILED_DIR="$SRC_DIR/profile.d"
-PROFILED_SCRIPT="freetype-envision.sh"
-DEST_PROFILED_FILE="/etc/profile.d/freetype-envision.sh"
+# environment
+ENVIRONMENT_SCRIPT="$SRC_DIR/environment/freetype-envision.sh"
+DEST_ENVIRONMENT="/etc/environment"
 
 # fontconfig
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
@@ -19,10 +18,6 @@ FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
 # Storing the manual (from script) installation info on target system.
-# Disable by setting the STORE_STATE env variable to false, but only do it when
-# using some other tool (package manager, etc) for project management, where
-# this script is only used to install the project files to target system.
-STORE_STATE="${STORE_STATE:-true}"
 DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
@@ -38,12 +33,7 @@ require_root () {
 }
 
 write_state_file () {
-    if [[ $STORE_STATE = false ]]; then
-        echo "Note: State file feature disabled."
-        return 1
-    fi
-
-    echo "--> Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE':"
+    echo "Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE':"
     mkdir -pv "$DEST_CONF_DIR"
 
     tee "$DEST_CONF_DIR/$DEST_STATE_FILE" <<EOF
@@ -54,11 +44,6 @@ EOF
 # Load the local state file into global var safely, allowing only the valid
 # values to be parsed.
 load_state_file () {
-    if [[ $STORE_STATE = false ]]; then
-        echo "Note: State file feature disabled."
-        return 1
-    fi
-
     if [[ ! -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         echo "Note: No state file detected on system."
         return 1
@@ -121,24 +106,18 @@ COMMANDS:
   install            : Install the project.
   remove             : Remove the installed project.
   help               : Show this help message.
-
-ENV:
-  STORE_STATE <bool> : Storing the manual (from script) installation info on
-                       target system. (true by default)
 EOF
 }
 
 project_install () {
-    echo "-> Begin project install."
+    echo "Setting up"
     verify_ver
     require_root
 
-    echo "--> Installing the profile.d scripts:"
-    install -v -m 644 \
-        "$PROFILED_DIR/$PROFILED_SCRIPT" \
-        "$DEST_PROFILED_FILE"
+    echo "  Appending the environment entries"
+    cat "$ENVIRONMENT_SCRIPT" >> "$DEST_ENVIRONMENT"
 
-    echo "--> Installing the fontconfig configurations:"
+    echo "  Installing the fontconfig configurations"
     install -v -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
@@ -149,25 +128,25 @@ project_install () {
 
     write_state_file
 
-    echo "-> Success! Reboot to apply the changes."
+    echo "Success! Reboot to apply the changes."
 }
 
 project_remove () {
-    echo "-> Begin project removal."
+    echo "Removing"
     verify_ver
     require_root
 
-    echo "--> Removing the profile.d scripts:"
-    rm -fv "$DEST_PROFILED_FILE"
+    echo "  Cleaning the environment entries"
+    sed -i '/FREETYPE_PROPERTIES=/d' "$DEST_ENVIRONMENT"
 
-    echo "--> Removing the fontconfig configurations:"
+    echo "  Removing the fontconfig configurations"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    echo "--> Removing the configurations directory:"
+    echo "  Removing the configuration directory"
     rm -rfv "$DEST_CONF_DIR"
 
-    echo "-> Success! Reboot to apply the changes."
+    echo "Success! Reboot to apply the changes."
 }
 
 
@@ -195,8 +174,11 @@ if [[ $2 =~ ^(normal|full)$ ]]; then
 Warning: Arguments 'normal' and 'full' (mode selection) are considered
 deprecated from version '0.7.0' and will be removed in '1.0.0' project release.
 
-There are now only one mode available, please avoid providing the second
+Only one mode is available from now on. Please avoid providing the second
 argument.
+
+Whatever argument is specified in this call now will result in a normal mode
+installation anyway.
 --------
 EOF
 fi

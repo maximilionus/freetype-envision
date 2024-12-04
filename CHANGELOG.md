@@ -5,6 +5,22 @@
   will now print out the warning message about deprecation and proceed with the
   **normal mode** installation.
 
+- Environmental variables are now set in `/etc/environment` file and handled by
+  PAM. The problem with using the `/etc/profile.d/` modular way, while being
+  much easy to manage, causes dependency on the shell to actually source those
+  values, which can be troublesome on some Linux distributions after the user
+  switches the default shell from `bash`.
+
+- Support for packaging is removed now with RHEL/Fedora (dnf) repository
+  deprecated. No more updates will come to COPR repository and it will be
+  closed after Fedora 41 EOL. Deployment become too complex and I don't won't
+  to waste my time on maintaining it all.
+
+- Removed the ability to disable the state file through `STORE_STATE` variable
+  from main script. Now, with plans for project packaging being canceled, this
+  feature lacks no purpose, as state file is required for manual installation
+  project management.
+
 
 ## Release 0.6.0
 - Secure state file load in manual management script.
