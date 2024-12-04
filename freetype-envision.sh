@@ -33,10 +33,10 @@ require_root () {
 }
 
 write_state_file () {
-    echo "Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE':"
-    mkdir -pv "$DEST_CONF_DIR"
+    echo "Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE'"
 
-    tee "$DEST_CONF_DIR/$DEST_STATE_FILE" <<EOF
+    mkdir -pv "$DEST_CONF_DIR"
+    cat <<EOF > $DEST_CONF_DIR/$DEST_STATE_FILE
 state[version]='$VERSION'
 EOF
 }
