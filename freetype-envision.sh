@@ -53,8 +53,6 @@ state[version]='$VERSION'
 EOF
 }
 
-# Load the local state file into global var safely, allowing only the valid
-# values to be parsed.
 load_state_file () {
     if [[ ! -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         echo "Note: No state file detected on system."
@@ -73,7 +71,6 @@ load_state_file () {
     done < "$DEST_CONF_DIR/$DEST_STATE_FILE"
 }
 
-# Check the state file values to decide if user is allowed to install the project
 verify_ver () {
     if [[ -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
         # State file exists, checking if the version is same
