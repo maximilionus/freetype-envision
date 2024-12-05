@@ -3,8 +3,8 @@
 set -e
 
 NAME="freetype-envision"
-SRC_DIR=src
 VERSION="0.7.0"
+SRC_DIR=src
 
 # Display the header with project name and version on start
 SHOW_HEADER=${SHOW_HEADER:=true}
@@ -31,15 +31,6 @@ declare -A g_state  # Associative array to store values from state file
 require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
         echo "This action requires the root privileges"
-
-        if ! command -v sudo 2>&1 >/dev/null
-        then
-            echo "Can not self-elevate script privileges due to missing" \
-                 "'sudo' in system"
-            exit 1
-        fi
-
-        exec sudo SHOW_HEADER=false "$SHELL" "$0" "$@"
         exit 1
     fi
 }
