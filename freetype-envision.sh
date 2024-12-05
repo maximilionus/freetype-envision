@@ -163,7 +163,7 @@ project_remove () {
 
 
 # Main logic below
-if $SHOW_HEADER; then show_header; fi
+[[ $SHOW_HEADER = true ]] && show_header
 
 # Deprecate short commands.
 # TODO: Remove in 1.0.0
