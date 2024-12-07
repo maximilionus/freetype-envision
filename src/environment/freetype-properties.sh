@@ -6,7 +6,7 @@
 # Official docs:
 # - https://freetype.org/freetype2/docs/reference/ft2-properties.html#no-stem-darkening
 
-export FREETYPE_PROPERTIES=\
+embedded[env_freetype_properties]=\
 "autofitter:no-stem-darkening=0\
  autofitter:darkening-parameters=500,0,1000,400,1500,400,2333,0\
  cff:no-stem-darkening=0\

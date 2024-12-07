@@ -10,7 +10,7 @@ SRC_DIR=src
 SHOW_HEADER=${SHOW_HEADER:=true}
 
 # environment
-ENVIRONMENT_SCRIPT="$SRC_DIR/environment/freetype-envision.sh"
+ENVIRONMENT_FTPROP="$SRC_DIR/environment/freetype-properties.sh"
 DEST_ENVIRONMENT="/etc/environment"
 
 # fontconfig
@@ -25,7 +25,12 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare -A g_state  # Associative array to store values from state file
+declare -A embedded
+declare -A local_state  # Associative array to store values from state file
+
+
+# -- EMBEDDED START --
+# -- EMBEDDED END --
 
 
 require_root () {
@@ -33,6 +38,17 @@ require_root () {
         echo "This action requires the root privileges"
         exit 1
     fi
+}
+
+live_embed_content () {
+    # TODO: Add check for script run mode and embed the content only if not
+    # already built-in. Should probably use some kind of a variable like
+    # "EMBEDDED".
+
+    source "$ENVIRONMENT_FTPROP"
+
+    embedded[fc_droid_sans]="$(<TODO)"
+    embedded[fc_grayscale]="$(<TODO)"
 }
 
 write_state_file () {
@@ -55,7 +71,7 @@ load_state_file () {
             # Only allow "state[key]='value'"
             local key="${BASH_REMATCH[1]}"
             local value="${BASH_REMATCH[2]}"
-            g_state["$key"]="$value"
+            local_state["$key"]="$value"
         else
             echo "Warning: Skipping invalid state file line '$line'" >&2
         fi
@@ -67,13 +83,13 @@ verify_ver () {
         # State file exists, checking if the version is same
         load_state_file
 
-        if [[ ${g_state[version]} != $VERSION ]]; then
+        if [[ ${local_state[version]} != $VERSION ]]; then
             cat <<EOF
 Manually installed project of a previous or newer version already exists on the
 system. Remove it with a script from the version corresponding to the installed
 one.
 
-Detected version: '${g_state[version]}'.
+Detected version: '${local_state[version]}'.
 EOF
             exit 1
         fi
@@ -113,9 +129,10 @@ project_install () {
     echo "Setting up"
     verify_ver
     require_root
+    live_embed_content
 
     echo "  Appending the environment entries"
-    cat "$ENVIRONMENT_SCRIPT" >> "$DEST_ENVIRONMENT"
+    cat "$ENVIRONMENT_FTPROP" >> "$DEST_ENVIRONMENT"
 
     echo "  Installing the fontconfig configurations"
     install -v -m 644 \
