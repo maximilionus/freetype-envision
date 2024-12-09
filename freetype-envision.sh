@@ -130,12 +130,13 @@ project_install () {
     load_content
 
     echo "  Appending the environment entries"
-    printf "${modules[env_freetype_properties]}" >> "$DEST_ENVIRONMENT"
+    printf "FREETYPE_PROPERTIES=\"${modules[env_freetype_properties]}\"\n" >> \
+        "$DEST_ENVIRONMENT"
 
     echo "  Installing the fontconfig configurations"
-    printf "${modules[fontconfig_grayscale]}" >> \
+    printf "${modules[fontconfig_grayscale]}\n" >> \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
-    printf "${modules[fontconfig_droid_sans]}" >> \
+    printf "${modules[fontconfig_droid_sans]}\n" >> \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     write_state_file
