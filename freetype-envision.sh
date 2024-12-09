@@ -25,12 +25,12 @@ DEST_CONF_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare -A embedded
-declare -A local_state  # Associative array to store values from state file
+declare -A modules
+declare -A local_state
 
 
-# -- EMBEDDED START --
-# -- EMBEDDED END --
+# -- MODULES START --
+# -- MODULES END --
 
 
 require_root () {
@@ -40,15 +40,13 @@ require_root () {
     fi
 }
 
-live_embed_content () {
-    # TODO: Add check for script run mode and embed the content only if not
-    # already built-in. Should probably use some kind of a variable like
-    # "EMBEDDED".
+load_content () {
+    (( ${#modules[@]} > 0 )) && return 1
 
     source "$ENVIRONMENT_FTPROP"
 
-    embedded[fc_droid_sans]="$(<TODO)"
-    embedded[fc_grayscale]="$(<TODO)"
+    modules[fontconfig_grayscale]="$(<$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]})"
+    modules[fontconfig_droid_sans]="$(<$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]})"
 }
 
 write_state_file () {
@@ -129,18 +127,15 @@ project_install () {
     echo "Setting up"
     verify_ver
     require_root
-    live_embed_content
+    load_content
 
     echo "  Appending the environment entries"
-    cat "$ENVIRONMENT_FTPROP" >> "$DEST_ENVIRONMENT"
+    printf "${modules[env_freetype_properties]}" >> "$DEST_ENVIRONMENT"
 
     echo "  Installing the fontconfig configurations"
-    install -v -m 644 \
-        "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
+    printf "${modules[fontconfig_grayscale]}" >> \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
-
-    install -v -m 644 \
-        "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
+    printf "${modules[fontconfig_droid_sans]}" >> \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     write_state_file
