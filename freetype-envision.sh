@@ -21,11 +21,11 @@ FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
 # Storing the manual (from script) installation info on target system
-DEST_CONF_DIR="/etc/freetype-envision"
+DEST_INFO_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
 # Global variables
-declare -A g_state  # Associative array to store values from state file
+declare -A local_info  # Associative array to store values from state file
 
 
 require_root () {
@@ -36,16 +36,16 @@ require_root () {
 }
 
 write_state_file () {
-    echo "Storing installation info in '$DEST_CONF_DIR/$DEST_STATE_FILE'"
+    echo "Storing installation info in '$DEST_INFO_DIR/$DEST_STATE_FILE'"
 
-    mkdir -pv "$DEST_CONF_DIR"
-    cat <<EOF > $DEST_CONF_DIR/$DEST_STATE_FILE
+    mkdir -pv "$DEST_INFO_DIR"
+    cat <<EOF > $DEST_INFO_DIR/$DEST_STATE_FILE
 state[version]='$VERSION'
 EOF
 }
 
 load_state_file () {
-    if [[ ! -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
+    if [[ ! -f $DEST_INFO_DIR/$DEST_STATE_FILE ]]; then
         echo "Note: No state file detected on system."
         return 1
     fi
@@ -55,25 +55,25 @@ load_state_file () {
             # Only allow "state[key]='value'"
             local key="${BASH_REMATCH[1]}"
             local value="${BASH_REMATCH[2]}"
-            g_state["$key"]="$value"
+            local_info["$key"]="$value"
         else
             echo "Warning: Skipping invalid state file line '$line'" >&2
         fi
-    done < "$DEST_CONF_DIR/$DEST_STATE_FILE"
+    done < "$DEST_INFO_DIR/$DEST_STATE_FILE"
 }
 
 verify_ver () {
-    if [[ -f $DEST_CONF_DIR/$DEST_STATE_FILE ]]; then
+    if [[ -f $DEST_INFO_DIR/$DEST_STATE_FILE ]]; then
         # State file exists, checking if the version is same
         load_state_file
 
-        if [[ ${g_state[version]} != $VERSION ]]; then
+        if [[ ${local_info[version]} != $VERSION ]]; then
             cat <<EOF
 Manually installed project of a previous or newer version already exists on the
 system. Remove it with a script from the version corresponding to the installed
 one.
 
-Detected version: '${g_state[version]}'.
+Detected version: '${local_info[version]}'.
 EOF
             exit 1
         fi
@@ -115,7 +115,8 @@ project_install () {
     require_root
 
     echo "  Appending the environment entries"
-    cat "$ENVIRONMENT_SCRIPT" >> "$DEST_ENVIRONMENT"
+    local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
+    echo "FREETYPE_PROPERTIES=\"$formatted_env_var\"" >> "$DEST_ENVIRONMENT"
 
     echo "  Installing the fontconfig configurations"
     install -v -m 644 \
@@ -137,14 +138,15 @@ project_remove () {
     require_root
 
     echo "  Cleaning the environment entries"
-    sed -i '/FREETYPE_PROPERTIES=/d' "$DEST_ENVIRONMENT"
+    local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
+    sed -i "/FREETYPE_PROPERTIES=\"$formatted_env_var\"/d" "$DEST_ENVIRONMENT"
 
     echo "  Removing the fontconfig configurations"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
     rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "  Removing the configuration directory"
-    rm -rfv "$DEST_CONF_DIR"
+    rm -rfv "$DEST_INFO_DIR"
 
     echo "Success! Reboot to apply the changes."
 }
