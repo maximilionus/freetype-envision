@@ -8,8 +8,9 @@
 - Environmental variables are now set in `/etc/environment` file and handled by
   PAM. The problem with using the `/etc/profile.d/` modular way, while being
   much easy to manage, causes dependency on the shell to actually source those
-  values, which can be troublesome on some Linux distributions after the user
-  switches the default shell from `bash`.
+  values, which can be troublesome on some Linux distributions.
+
+- Added colored output and disabled verbose information in control script.
 
 - Support for packaging is removed now with RHEL/Fedora (dnf) repository
   deprecated. No more updates will come to COPR repository and it will be

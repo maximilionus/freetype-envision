@@ -24,19 +24,26 @@ FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 DEST_INFO_DIR="/etc/freetype-envision"
 DEST_STATE_FILE="state"
 
+# Colors
+C_RESET="\e[0m"
+C_GREEN="\e[0;32m"
+C_YELLOW="\e[0;33m"
+C_RED="\e[0;31m"
+C_WHITE_BOLD="\e[1;37m"
+
 # Global variables
 declare -A local_info  # Associative array to store values from state file
 
 
 require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-        echo "This action requires the root privileges"
+        printf "${C_RED}This action requires the root privileges${C_RESET}\n"
         exit 1
     fi
 }
 
 write_state_file () {
-    echo "Storing installation info in '$DEST_INFO_DIR/$DEST_STATE_FILE'"
+    printf "Storing installation info in '$DEST_INFO_DIR/$DEST_STATE_FILE'\n"
 
     mkdir -p "$DEST_INFO_DIR"
     cat <<EOF > $DEST_INFO_DIR/$DEST_STATE_FILE
@@ -46,7 +53,7 @@ EOF
 
 load_state_file () {
     if [[ ! -f $DEST_INFO_DIR/$DEST_STATE_FILE ]]; then
-        echo "Note: No state file detected on system."
+        printf "Note: No state file detected on system.\n"
         return 1
     fi
 
@@ -57,7 +64,7 @@ load_state_file () {
             local value="${BASH_REMATCH[2]}"
             local_info["$key"]="$value"
         else
-            echo "Warning: Skipping invalid state file line '$line'" >&2
+            printf "${C_YELLOW}Warning: Skipping invalid state file line '$line'${C_RESET}\n"
         fi
     done < "$DEST_INFO_DIR/$DEST_STATE_FILE"
 }
@@ -95,7 +102,7 @@ EOF
 }
 
 show_header () {
-    echo "$NAME, version $VERSION"
+    printf "${C_WHITE_BOLD}$NAME, version $VERSION${C_RESET}\n"
 }
 
 show_help () {
@@ -110,15 +117,15 @@ EOF
 }
 
 project_install () {
-    echo "Setting up"
+    printf "${C_WHITE_BOLD}Setting up${C_RESET}\n"
     verify_ver
     require_root
 
-    echo "  Appending the environment entries"
+    printf "Appending the environment entries\n"
     local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
-    echo "FREETYPE_PROPERTIES=\"$formatted_env_var\"" >> "$DEST_ENVIRONMENT"
+    printf "FREETYPE_PROPERTIES=\"$formatted_env_var\"\n" >> "$DEST_ENVIRONMENT"
 
-    echo "  Installing the fontconfig configurations"
+    printf "Installing the fontconfig configurations\n"
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
@@ -129,26 +136,26 @@ project_install () {
 
     write_state_file
 
-    echo "Success! Reboot to apply the changes."
+    printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
 
 project_remove () {
-    echo "Removing"
+    printf "${C_WHITE_BOLD}Removing${C_RESET}\n"
     verify_ver
     require_root
 
-    echo "  Cleaning the environment entries"
+    printf "Cleaning the environment entries\n"
     local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
     sed -i "/FREETYPE_PROPERTIES=\"$formatted_env_var\"/d" "$DEST_ENVIRONMENT"
 
-    echo "  Removing the fontconfig configurations"
+    printf "Removing the fontconfig configurations\n"
     rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
     rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    echo "  Removing the configuration directory"
+    printf "Removing the configuration directory\n"
     rm -rf "$DEST_INFO_DIR"
 
-    echo "Success! Reboot to apply the changes."
+    printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
 
 
@@ -159,18 +166,21 @@ project_remove () {
 # TODO: Remove in 1.0.0
 case "$1" in
     i|r|h)
+        printf "$C_YELLOW"
         cat <<EOF
 --------
 Warning: Arguments 'i', 'r' and 'h' (short commands) are considered deprecated
 from version '0.5.0' and will be removed in '1.0.0' project release.
 --------
 EOF
+        printf "$C_RESET"
         ;;
 esac
 
 # Deprecate project modes
 # TODO: Remove in 1.0.0
 if [[ $2 =~ ^(normal|full)$ ]]; then
+    printf "$C_YELLOW"
     cat <<EOF
 --------
 Warning: Arguments 'normal' and 'full' (mode selection) are considered
@@ -180,9 +190,10 @@ Only one mode is available from now on. Please avoid providing the second
 argument.
 
 Whatever argument is specified in this call now will result in a normal mode
-installation anyway.
+installation.
 --------
 EOF
+    printf "$C_RESET"
 fi
 
 case $1 in
@@ -204,7 +215,7 @@ case $1 in
         show_help
         ;;
     *)
-        echo "Error: Invalid argument: \"$1\"."
-        echo "Use \"help\" to get the list of commands"
+        printf "${C_RED}Invalid argument${C_RESET} $1\n"
+        printf "Use ${C_WHITE_BOLD}help${C_RESET} command to get usage information\n"
         exit 1
 esac
