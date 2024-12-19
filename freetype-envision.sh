@@ -38,7 +38,7 @@ require_root () {
 write_state_file () {
     echo "Storing installation info in '$DEST_INFO_DIR/$DEST_STATE_FILE'"
 
-    mkdir -pv "$DEST_INFO_DIR"
+    mkdir -p "$DEST_INFO_DIR"
     cat <<EOF > $DEST_INFO_DIR/$DEST_STATE_FILE
 state[version]='$VERSION'
 EOF
@@ -119,11 +119,11 @@ project_install () {
     echo "FREETYPE_PROPERTIES=\"$formatted_env_var\"" >> "$DEST_ENVIRONMENT"
 
     echo "  Installing the fontconfig configurations"
-    install -v -m 644 \
+    install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
 
-    install -v -m 644 \
+    install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
@@ -142,11 +142,11 @@ project_remove () {
     sed -i "/FREETYPE_PROPERTIES=\"$formatted_env_var\"/d" "$DEST_ENVIRONMENT"
 
     echo "  Removing the fontconfig configurations"
-    rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
-    rm -fv "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
+    rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
+    rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     echo "  Removing the configuration directory"
-    rm -rfv "$DEST_INFO_DIR"
+    rm -rf "$DEST_INFO_DIR"
 
     echo "Success! Reboot to apply the changes."
 }
