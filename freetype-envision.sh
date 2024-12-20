@@ -20,9 +20,9 @@ DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
-# Storing the manual (from script) installation info on target system
-DEST_INFO_DIR="/etc/freetype-envision"
-DEST_STATE_FILE="state"
+# Installation info on target system
+DEST_INFO_DIR="/usr/share/freetype-envision"
+DEST_INFO_FILE="info"
 
 # Colors
 C_RESET="\e[0m"
@@ -32,7 +32,7 @@ C_RED="\e[0;31m"
 C_WHITE_BOLD="\e[1;37m"
 
 # Global variables
-declare -A local_info  # Associative array to store values from state file
+declare -A local_info
 
 
 require_root () {
@@ -42,38 +42,38 @@ require_root () {
     fi
 }
 
-write_state_file () {
-    printf "Storing installation info in '$DEST_INFO_DIR/$DEST_STATE_FILE'\n"
+write_info_file () {
+    printf "Storing the installation info\n"
 
     mkdir -p "$DEST_INFO_DIR"
-    cat <<EOF > $DEST_INFO_DIR/$DEST_STATE_FILE
-state[version]='$VERSION'
+    cat <<EOF > $DEST_INFO_DIR/$DEST_INFO_FILE
+version="$VERSION"
 EOF
 }
 
-load_state_file () {
-    if [[ ! -f $DEST_INFO_DIR/$DEST_STATE_FILE ]]; then
-        printf "Note: No state file detected on system.\n"
-        return 1
+load_info_file () {
+    if [[ ! -f $DEST_INFO_DIR/$DEST_INFO_FILE ]]; then
+        return 0
     fi
 
     while read -r line; do
-        if [[ $line =~ ^state\[([a-zA-Z0-9_]+)\]=\'?([^\']*)\'?$ ]]; then
-            # Only allow "state[key]='value'"
+        # Parse all key="value"
+        regex='^([a-zA-Z_][a-zA-Z0-9_]*)="([^"]*)"$'
+
+        if [[ $line =~ $regex ]]; then
             local key="${BASH_REMATCH[1]}"
             local value="${BASH_REMATCH[2]}"
             local_info["$key"]="$value"
         else
-            printf "${C_YELLOW}Warning: Skipping invalid state file line '$line'${C_RESET}\n"
+            printf "${C_YELLOW}Warning: Skipping invalid info file line '$line'${C_RESET}\n"
         fi
-    done < "$DEST_INFO_DIR/$DEST_STATE_FILE"
+    done < "$DEST_INFO_DIR/$DEST_INFO_FILE"
 }
 
-verify_ver () {
-    if [[ -f $DEST_INFO_DIR/$DEST_STATE_FILE ]]; then
-        # State file exists, checking if the version is same
-        load_state_file
+check_version () {
+    load_info_file
 
+    if (( ${#local_info[@]} )); then
         if [[ ${local_info[version]} != $VERSION ]]; then
             cat <<EOF
 Manually installed project of a previous or newer version already exists on the
@@ -84,20 +84,13 @@ Detected version: '${local_info[version]}'.
 EOF
             exit 1
         fi
-
-        unset state
-    else
-        if [[ -f $DEST_PROFILED_FILE ]]; then
-            # Project files exist on the taget system, but no state file.
-            # ? Checking only for one profile.d script should be enough, but
-            #   something weird may happen. Anyway... ( ͡° ͜ʖ ͡°)
+    elif ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
             cat <<EOF
 Project is already installed on the system, probably with package manager or an
-installation script for the version below '0.5.0'. Remove it using the original
+installation script for the version below '0.7.0'. Remove it using the original
 installation method.
 EOF
             exit 1
-        fi
     fi
 }
 
@@ -118,7 +111,8 @@ EOF
 
 project_install () {
     printf "${C_WHITE_BOLD}Setting up${C_RESET}\n"
-    verify_ver
+
+    check_version
     require_root
 
     printf "Appending the environment entries\n"
@@ -134,14 +128,15 @@ project_install () {
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    write_state_file
+    write_info_file
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
 
 project_remove () {
     printf "${C_WHITE_BOLD}Removing${C_RESET}\n"
-    verify_ver
+
+    check_version
     require_root
 
     printf "Cleaning the environment entries\n"
