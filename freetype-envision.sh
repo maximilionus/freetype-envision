@@ -42,15 +42,6 @@ require_root () {
     fi
 }
 
-write_info_file () {
-    printf "Storing the installation info\n"
-
-    mkdir -p "$DEST_INFO_DIR"
-    cat <<EOF > $DEST_INFO_DIR/$DEST_INFO_FILE
-version="$VERSION"
-EOF
-}
-
 load_info_file () {
     if [[ ! -f $DEST_INFO_DIR/$DEST_INFO_FILE ]]; then
         return 0
@@ -128,7 +119,11 @@ project_install () {
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
-    write_info_file
+    printf "Storing the installation info\n"
+    mkdir -p "$DEST_INFO_DIR"
+    cat <<EOF > $DEST_INFO_DIR/$DEST_INFO_FILE
+version="$VERSION"
+EOF
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
@@ -137,6 +132,13 @@ project_remove () {
     printf "${C_WHITE_BOLD}Removing${C_RESET}\n"
 
     check_version
+
+
+    if (( ! ${#local_info[@]} )); then
+        printf "${C_RED}Project is not installed.${C_RESET}\n"
+        exit 1
+    fi
+
     require_root
 
     printf "Cleaning the environment entries\n"
