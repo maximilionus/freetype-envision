@@ -106,6 +106,10 @@ project_install () {
     check_version
     require_root
 
+    printf "Storing the installation metadata\n"
+    mkdir -p "$DEST_INFO_DIR"
+    printf "version=\"$VERSION\"\n" > $DEST_INFO_DIR/$DEST_INFO_FILE
+
     printf "Appending the environment entries\n"
     local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
     printf "FREETYPE_PROPERTIES=\"$formatted_env_var\"\n" >> "$DEST_ENVIRONMENT"
@@ -118,12 +122,6 @@ project_install () {
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
-
-    printf "Storing the installation info\n"
-    mkdir -p "$DEST_INFO_DIR"
-    cat <<EOF > $DEST_INFO_DIR/$DEST_INFO_FILE
-version="$VERSION"
-EOF
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
