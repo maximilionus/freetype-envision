@@ -16,9 +16,10 @@ DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
 FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
 
-# Installation info on target system
-DEST_INFO_DIR="/usr/share/freetype-envision"
+# Metadata location
+DEST_SHARED_DIR="/usr/share/freetype-envision"
 DEST_INFO_FILE="info"
+DEST_UNINSTALL_FILE="uninstaller.sh"
 
 # Colors
 C_RESET="\e[0m"
@@ -39,7 +40,7 @@ require_root () {
 }
 
 load_info_file () {
-    if [[ ! -f $DEST_INFO_DIR/$DEST_INFO_FILE ]]; then
+    if [[ ! -f $DEST_SHARED_DIR/$DEST_INFO_FILE ]]; then
         return 0
     fi
 
@@ -54,7 +55,7 @@ load_info_file () {
         else
             printf "${C_YELLOW}Warning: Skipping invalid info file line '$line'${C_RESET}\n"
         fi
-    done < "$DEST_INFO_DIR/$DEST_INFO_FILE"
+    done < "$DEST_SHARED_DIR/$DEST_INFO_FILE"
 }
 
 check_version () {
@@ -103,21 +104,31 @@ project_install () {
     require_root
 
     printf "Storing the installation metadata\n"
-    mkdir -p "$DEST_INFO_DIR"
-    printf "version=\"$VERSION\"\n" > $DEST_INFO_DIR/$DEST_INFO_FILE
+    mkdir -p "$DEST_SHARED_DIR"
+    touch "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    printf "version=\"$VERSION\"\n" > $DEST_SHARED_DIR/$DEST_INFO_FILE
 
     printf "Appending the environment entries\n"
     local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
     printf "FREETYPE_PROPERTIES=\"$formatted_env_var\"\n" >> "$DEST_ENVIRONMENT"
+    printf 'sed -i "/FREETYPE_PROPERTIES=\"%s\"/d" "%s"\n' \
+        "$formatted_env_var" "$DEST_ENVIRONMENT" \
+        > "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
 
     printf "Installing the fontconfig configurations\n"
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
+    printf 'rm -f "%s"\n' \
+        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}" \
+        >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
 
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
+    printf 'rm -f "%s"\n' \
+        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}" \
+        >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
@@ -126,7 +137,6 @@ project_remove () {
     printf "${C_WHITE_BOLD}Removing${C_RESET}\n"
 
     check_version
-
 
     if (( ! ${#local_info[@]} )); then
         printf "${C_RED}Project is not installed.${C_RESET}\n"
@@ -144,7 +154,7 @@ project_remove () {
     rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
 
     printf "Removing the configuration directory\n"
-    rm -rf "$DEST_INFO_DIR"
+    rm -rf "$DEST_SHARED_DIR"
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
