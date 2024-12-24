@@ -33,16 +33,6 @@ C_RED="\e[0;31m"
 declare -A local_info
 
 
-# Check if version $2 >= $1
-verlte() {
-    [  "$1" = "`echo -e \"$1\n$2\" | sort -V | head -n1`" ]
-}
-
-# Check if version $2 > $1
-verlt() {
-    [ "$1" = "$2" ] && return 1 || verlte $1 $2
-}
-
 require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
         printf "${C_RED}This action requires the root privileges${C_RESET}\n"
