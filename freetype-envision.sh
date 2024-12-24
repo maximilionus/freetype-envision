@@ -55,7 +55,7 @@ case $1 in
     # "h" is deprecated
     # TODO: Remove in 1.0.0
     h|help)
-        show_help
+        cmd_help
         ;;
     *)
         printf "${C_RED}Invalid argument${C_RESET} $1\n"

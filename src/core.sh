@@ -40,6 +40,7 @@ require_root () {
     fi
 }
 
+# Parse and load the installation information
 load_info_file () {
     if [[ ! -f $DEST_SHARED_DIR/$DEST_INFO_FILE ]]; then
         return 0
@@ -59,7 +60,8 @@ load_info_file () {
     done < "$DEST_SHARED_DIR/$DEST_INFO_FILE"
 }
 
-check_integrity () {
+# Check for old versions that use deprecated formats and notify user
+check_for_old () {
     if (( ! ${#local_info[@]} )); then
         if ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
             cat <<EOF
@@ -73,7 +75,8 @@ exit 1
     fi
 }
 
-exec_uninstaller () {
+# Call the universal uninstaller that should be stored on target maching
+call_uninstaller () {
     if [[ ! -f "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE" ]]; then
         printf "${C_RED}Uninstaller script not found, installation corrupted${C_RESET}"
         exit 1
@@ -88,7 +91,7 @@ show_header () {
     printf "${C_BOLD}$NAME, version $VERSION${C_RESET}\n"
 }
 
-show_help () {
+cmd_help () {
     cat <<EOF
 Usage: $0 [COMMAND]
 
@@ -103,7 +106,7 @@ cmd_install () {
     printf "${C_BOLD}Setting up${C_RESET}\n"
 
     load_info_file
-    check_integrity
+    check_for_old
 
     if [[ ${local_info[version]} == "$VERSION" ]]; then
         printf "${C_GREEN}Current version is already installed.${C_RESET}\n"
@@ -112,7 +115,7 @@ cmd_install () {
         printf "${C_GREEN}Detected $NAME version ${local_info[version]} on the target system.${C_RESET}\n"
         read -p "Do you wish to upgrade to version $VERSION? (y/n): "
         printf "\n"
-        [[ $REPLY =~ ^[Yy]$ ]] && exec_uninstaller || exit 1
+        [[ $REPLY =~ ^[Yy]$ ]] && call_uninstaller || exit 1
     fi
 
     require_root
@@ -171,7 +174,7 @@ cmd_remove () {
     printf "${C_BOLD}Removing${C_RESET}\n"
 
     load_info_file
-    check_integrity
+    check_for_old
 
     if (( ! ${#local_info[@]} )); then
         printf "${C_RED}Project is not installed.${C_RESET}\n"
@@ -179,7 +182,7 @@ cmd_remove () {
     fi
 
     require_root
-    exec_uninstaller
+    call_uninstaller
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
