@@ -1,4 +1,12 @@
 ## Release 0.7.0
+- New web wrapper script added to project. Now you can install and control the
+  project without having to download it manually
+
+- Support for automatic project upgrades. Now you can install the project
+  easily without having to manually deal with the previous version of it. This
+  feature is only supported on versions above `0.7.0`, so upgrade to this
+  release from previous versions will sadly still be manual, sorry :(
+
 - Project modes are now deprecated. There is no point in keeping the **full
   mode** anymore, as most of it's features are now included by default in
   **normal mode**. Passing any mode arguments to the manual installation script
