@@ -45,12 +45,12 @@ case $1 in
     i|install)
         # $2 (modes) are deprecated
         # TODO: Remove in 1.0.0
-        project_install $2
+        cmd_install $2
         ;;
     # "r" is deprecated
     # TODO: Remove in 1.0.0
     r|remove)
-        project_remove
+        cmd_remove
         ;;
     # "h" is deprecated
     # TODO: Remove in 1.0.0

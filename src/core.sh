@@ -23,14 +23,25 @@ DEST_UNINSTALL_FILE="uninstaller.sh"
 
 # Colors
 C_RESET="\e[0m"
+C_BOLD="\e[1m"
+C_DIM="\e[2m"
 C_GREEN="\e[0;32m"
 C_YELLOW="\e[0;33m"
 C_RED="\e[0;31m"
-C_WHITE_BOLD="\e[1;37m"
 
 # Global variables
 declare -A local_info
 
+
+# Check if version $2 >= $1
+verlte() {
+    [  "$1" = "`echo -e \"$1\n$2\" | sort -V | head -n1`" ]
+}
+
+# Check if version $2 > $1
+verlt() {
+    [ "$1" = "$2" ] && return 1 || verlte $1 $2
+}
 
 require_root () {
     if [[ $(/usr/bin/id -u) -ne 0 ]]; then
@@ -58,32 +69,32 @@ load_info_file () {
     done < "$DEST_SHARED_DIR/$DEST_INFO_FILE"
 }
 
-check_version () {
-    load_info_file
-
-    if (( ${#local_info[@]} )); then
-        if [[ ${local_info[version]} != $VERSION ]]; then
+check_integrity () {
+    if (( ! ${#local_info[@]} )); then
+        if ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
             cat <<EOF
-Manually installed project of a previous or newer version already exists on the
-system. Remove it with a script from the version corresponding to the installed
-one.
-
-Detected version: '${local_info[version]}'.
+Project is presumably installed on the system, probably with package manager or
+an installation script for the version below '0.7.0', that does not support the
+automatic removal. Uninstall it using the original installation method.
 EOF
-            exit 1
+exit 1
         fi
-    elif ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
-            cat <<EOF
-Project is already installed on the system, probably with package manager or an
-installation script for the version below '0.7.0'. Remove it using the original
-installation method.
-EOF
-            exit 1
     fi
 }
 
+exec_uninstaller () {
+    if [[ ! -f "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE" ]]; then
+        printf "${C_RED}Uninstaller script not found, installation corrupted${C_RESET}"
+        exit 1
+    fi
+
+    printf "$C_DIM"
+    "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    printf "$C_RESET"
+}
+
 show_header () {
-    printf "${C_WHITE_BOLD}$NAME, version $VERSION${C_RESET}\n"
+    printf "${C_BOLD}$NAME, version $VERSION${C_RESET}\n"
 }
 
 show_help () {
@@ -97,46 +108,79 @@ COMMANDS:
 EOF
 }
 
-project_install () {
-    printf "${C_WHITE_BOLD}Setting up${C_RESET}\n"
+cmd_install () {
+    printf "${C_BOLD}Setting up${C_RESET}\n"
 
-    check_version
+    load_info_file
+    check_integrity
+
+    if [[ ${local_info[version]} == "$VERSION" ]]; then
+        printf "${C_GREEN}Current version is already installed.${C_RESET}\n"
+        exit 1
+    elif [[ ! -z ${local_info[version]} ]]; then
+        printf "${C_GREEN}Detected $NAME version ${local_info[version]} on the target system.${C_RESET}\n"
+        read -p "Do you wish to upgrade to version $VERSION? (y/n): "
+        printf "\n"
+        [[ $REPLY =~ ^[Yy]$ ]] && exec_uninstaller || exit 1
+    fi
+
     require_root
 
     printf "Storing the installation metadata\n"
     mkdir -p "$DEST_SHARED_DIR"
+    touch "$DEST_SHARED_DIR/$DEST_INFO_FILE"
     touch "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
-    printf "version=\"$VERSION\"\n" > $DEST_SHARED_DIR/$DEST_INFO_FILE
+    chmod +x "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_INFO_FILE"
+version="$VERSION"
+EOF
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+#!/bin/bash
+set -e
+echo "Using uninstaller for version $VERSION"
+EOF
 
     printf "Appending the environment entries\n"
-    local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
-    printf "FREETYPE_PROPERTIES=\"$formatted_env_var\"\n" >> "$DEST_ENVIRONMENT"
-    printf 'sed -i "/FREETYPE_PROPERTIES=\"%s\"/d" "%s"\n' \
-        "$formatted_env_var" "$DEST_ENVIRONMENT" \
-        > "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    local fmt_env=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
+    cat <<EOF >> "$DEST_ENVIRONMENT"
+FREETYPE_PROPERTIES="$fmt_env"
+EOF
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+echo "Cleaning the environment entries"
+sed -i '/FREETYPE_PROPERTIES="$fmt_env"/d' "$DEST_ENVIRONMENT"
+EOF
 
     printf "Installing the fontconfig configurations\n"
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
-    printf 'rm -f "%s"\n' \
-        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}" \
-        >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+echo "Removing the fontconfig configurations"
+rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
+EOF
 
     install -m 644 \
         "$FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[0]}" \
         "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
-    printf 'rm -f "%s"\n' \
-        "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}" \
-        >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
+EOF
+
+    cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+echo "Removing the metadata"
+rm -rf "$DEST_SHARED_DIR"
+echo "Successful removal"
+EOF
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
 
-project_remove () {
-    printf "${C_WHITE_BOLD}Removing${C_RESET}\n"
+cmd_remove () {
+    printf "${C_BOLD}Removing${C_RESET}\n"
 
-    check_version
+    load_info_file
+    check_integrity
 
     if (( ! ${#local_info[@]} )); then
         printf "${C_RED}Project is not installed.${C_RESET}\n"
@@ -144,17 +188,7 @@ project_remove () {
     fi
 
     require_root
-
-    printf "Cleaning the environment entries\n"
-    local formatted_env_var=$(exec bash -c "source $ENVIRONMENT_SCRIPT && echo \$FREETYPE_PROPERTIES")
-    sed -i "/FREETYPE_PROPERTIES=\"$formatted_env_var\"/d" "$DEST_ENVIRONMENT"
-
-    printf "Removing the fontconfig configurations\n"
-    rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_GRAYSCALE[1]}-${FONTCONFIG_GRAYSCALE[0]}"
-    rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[0]}"
-
-    printf "Removing the configuration directory\n"
-    rm -rf "$DEST_SHARED_DIR"
+    exec_uninstaller
 
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
