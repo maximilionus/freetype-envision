@@ -8,16 +8,16 @@
 #
 # Usage:
 # ------
-# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+# $ curl -s -L [LINK]/wrapper.sh \
 #       | sudo bash -s -- [COMMAND]
 #
 # Examples:
 # --------
-# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+# $ curl -s -L [LINK]/wrapper.sh \
 #       | sudo bash -s -- install
 #
-# $ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
-#       | sudo VERSION=0.2.0 bash -s -- install full
+# $ curl -s -L [LINK]/wrapper.sh \
+#       | sudo VERSION=0.2.0 bash -s -- install
 
 set -e
 
@@ -31,7 +31,7 @@ CURL_FLAGS="-s --show-error --fail -L"
 
 # Is version $2 >= $1
 verlte() {
-    [  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
+    [  "$1" = "`echo -e \"$1\n$2\" | sort -V | head -n1`" ]
 }
 
 
@@ -40,29 +40,31 @@ echo "Web wrapper for $NAME."
 TMP_DIR=$( mktemp -d )
 
 if [[ ! -d $TMP_DIR ]]; then
-    echo "[!] Failed to initialize temporary directory."
+    echo "[Wrapper] Failed to initialize temporary directory"
     exit 1
 fi
 
-echo "[+] Using temporary directory $TMP_DIR."
-trap 'rm -rf -- "$TMP_DIR" && echo "[+] Temporary directory $TMP_DIR wiped."' EXIT
+echo "[Wrapper] Using temporary directory $TMP_DIR"
+trap 'rm -rf -- "$TMP_DIR" && echo "[Wrapper] Temporary directory $TMP_DIR wiped"' EXIT
 
 cd "$TMP_DIR"
 
 download_url=""
 if [[ -z $VERSION ]]; then
-    echo "[+] Preparing the latest release."
+    echo "[Wrapper] Preparing the latest release."
 
     download_url=$(curl $CURL_FLAGS "$DOWNLOAD_LATEST_URL"  \
         | grep "tarball_url"                                \
         | tr -d ' ",;'                                      \
         | sed 's/tarball_url://')
 else
-    echo "[+] Preparing the '$VERSION' release."
+    echo "[Wrapper] Preparing the '$VERSION' release."
 
     if ! verlte $VERSION_MIN_SUPPORTED $VERSION; then
-        echo "[!] This version is not supported by wrapper,"
-        echo "    minimal supported version is: $VERSION_MIN_SUPPORTED"
+        cat <<EOF
+[Wrapper] This version is not supported by wrapper script,
+          minimal supported version is: $VERSION_MIN_SUPPORTED"
+EOF
         exit 1
     fi
 
