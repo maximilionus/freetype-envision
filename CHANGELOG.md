@@ -1,4 +1,10 @@
 ## Release 0.7.0
+- Project modes are now deprecated. There is no point in keeping the **full
+  mode** anymore, as most of it's features are now included by default in
+  **normal mode**. Passing any mode arguments to the script will now print out
+  the warning message about deprecation and proceed with the **normal mode**
+  installation.
+
 - New web wrapper script added to project. Now you can install and control the
   project without having to download it manually
 
@@ -7,28 +13,22 @@
   feature is only supported on versions above `0.7.0`, so upgrade to this
   release from previous versions will sadly still be manual, sorry :(
 
-- Project modes are now deprecated. There is no point in keeping the **full
-  mode** anymore, as most of it's features are now included by default in
-  **normal mode**. Passing any mode arguments to the manual installation script
-  will now print out the warning message about deprecation and proceed with the
-  **normal mode** installation.
+- Enhanced colored output and removed verbose information in main script.
 
 - Environmental variables are now set in `/etc/environment` file and handled by
   PAM. The problem with using the `/etc/profile.d/` modular way, while being
-  much easy to manage, causes dependency on the shell to actually source those
-  values, which can be troublesome on some Linux distributions.
-
-- Added colored output and disabled verbose information in control script.
+  much easier to manage, causes dependency on the shell to actually source
+  those values, which can be troublesome on some Linux distributions.
 
 - Support for packaging is removed now with RHEL/Fedora (dnf) repository
-  deprecated. No more updates will come to COPR repository and it will be
-  closed after Fedora 41 EOL. Deployment become too complex and I don't won't
-  to waste my time on maintaining it all.
+  deprecated. No more updates will come to COPR repository, and it will be
+  closed after Fedora 41 EOL. Deployment process became too complex, and I do
+  not wish to waste my time on maintaining it all.
 
 - Removed the ability to disable the state file through `STORE_STATE` variable
-  from main script. Now, with plans for project packaging being canceled, this
-  feature lacks no purpose, as state file is required for manual installation
-  project management.
+  from main script. Now, with project packaging being canceled, this feature
+  lacks no purpose, as state file is required for manual installation project
+  management.
 
 
 ## Release 0.6.0
