@@ -11,30 +11,21 @@ Compare the changes
 
 
 ## Usage
-### Net
-#### Install
-Ensure that `curl` is available in your system and execute the command below to install the project:
-
+You can easily install and control the project with web wrapper script
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
+curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
     | sudo bash -s -- install
 ```
 
-> You can also specify the version of project you want to use by declaring the
-> `VERSION` environmental variable:
-> ```sh
-> curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
->     | sudo VERSION="0.2.0" bash -s -- install full
-> ```
-
-#### Remove
+You can also specify the version of project you want to use by declaring the
+`VERSION` environmental variable
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
-    | sudo bash -s -- remove
+curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
+    | sudo VERSION="0.2.0" bash -s -- [COMMAND]
 ```
 
-### Manual
-#### Install
+
+### Install
 1. Download the latest release
    [here](https://github.com/maximilionus/freetype-envision/releases/latest)
    *(download "Source code")* and unpack it to any user available location.
@@ -45,14 +36,20 @@ curl -s -L https://maximilionus.github.io/freetype-envision/web.sh \
    ```
 4. Reboot to apply the changes.
 
-#### Remove
+### Remove
 1. Run the command below, root required:
    ```sh
    sudo ./freetype-envision.sh remove
    ```
 2. Reboot to apply the changes.
 
-#### Upgrade
+### Upgrade
+**Versions above `0.7.0`:**  
+Follow the same steps from "Install" section. If there's a supported version of
+project already installed in system, the "install" command will prompt user to
+allow the upgrade.
+
+**Versions below `0.7.0`:**  
 1. Follow the **remove procedure** using the script exactly the version of the
    project that is installed in the system.
 2. Download the new version and proceed with **install procedure**.
