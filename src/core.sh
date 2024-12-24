@@ -63,9 +63,10 @@ check_integrity () {
     if (( ! ${#local_info[@]} )); then
         if ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
             cat <<EOF
-Project is presumably installed on the system, probably with package manager or
-an installation script for the version below '0.7.0', that does not support the
-automatic removal. Uninstall it using the original installation method.
+Project is already installed on the system, presumably with package manager or
+an installation script of the version below '0.7.0', that does not support the
+automatic removal. You have to uninstall it using the original installation
+method first.
 EOF
 exit 1
         fi
