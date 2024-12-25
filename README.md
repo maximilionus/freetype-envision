@@ -1,6 +1,6 @@
 ## About
 Carefully tuned FreeType font rendering library adjustments, designed to
-improve fonts visibility on **Linux** platform.
+improve fonts visibility on Linux platform.
 
 Visual demonstration can be found
 [here](https://github.com/maximilionus/freetype-envision/wiki/Comparison).
@@ -51,9 +51,10 @@ project already installed in system, the "install" command will prompt user to
 allow the upgrade.
 
 **Versions below `0.7.0`:**  
-1. Follow the **remove procedure** using the script exactly the version of the
-   project that is installed in the system.
-2. Download the new version and proceed with **install procedure**.
+1. Follow the "Remove" section steps using the script exactly the version of
+   the project that is currently installed on the system.
+2. Now you can install the new version by simply following the "Install"
+   section.
 
 
 ## Details
