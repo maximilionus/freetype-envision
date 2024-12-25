@@ -1,9 +1,10 @@
 ## About
-Carefully tuned **FreeType** font rendering library adjustments, designed to
+Carefully tuned FreeType font rendering library adjustments, designed to
 improve fonts visibility on **Linux** platform.
 
-Compare the changes
+Visual demonstration can be found
 [here](https://github.com/maximilionus/freetype-envision/wiki/Comparison).
+
 
 ### Overall
 - Improve the visibility of medium and small-sized fonts.
