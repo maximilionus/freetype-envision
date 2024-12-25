@@ -113,6 +113,7 @@ cmd_install () {
         exit 1
     elif [[ ! -z ${local_info[version]} ]]; then
         printf "${C_GREEN}Detected $NAME version ${local_info[version]} on the target system.${C_RESET}\n"
+        require_root
         read -p "Do you wish to upgrade to version $VERSION? (y/n): "
         printf "\n"
         [[ $REPLY =~ ^[Yy]$ ]] && call_uninstaller || exit 1
