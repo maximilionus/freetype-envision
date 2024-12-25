@@ -47,7 +47,7 @@ curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
 ### Upgrade
 **Versions above `0.7.0`:**  
 Follow the same steps from "Install" section. If there's a supported version of
-project already installed in system, the "install" command will prompt user to
+the project already installed, the "install" command will prompt the user to
 allow the upgrade.
 
 **Versions below `0.7.0`:**  
