@@ -58,13 +58,13 @@ allow the upgrade.
 
 
 ## Details
-- Configurations in profile.d:
-   - Stem-darkening *(universal fonts emboldening)* with custom values for
-     `autofitter`, `type1`, `t1cid` and `cff` drivers.
+- Environmental configurations:
+   - Stem-darkening *(fonts emboldening)* with custom values for `autofitter`,
+   `type1`, `t1cid` and `cff` drivers.
    > This feature improves visibility of the medium and small sized-fonts.
    > Especially helpful for the LowPPI displays.
 
-- Configurations in fontconfig:
+- Rules for fontconfig:
    - Enforce grayscale antialiasing (disable sub-pixel).
    > Grayscale antialiasing should be enforced in the system to make the
    > stem-darkening work properly.
