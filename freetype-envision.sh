@@ -5,6 +5,21 @@ source src/core.sh
 
 [[ $SHOW_HEADER = true ]] && show_header
 
+detected_system="$( uname -s )"
+if [[ $detected_system != Linux* ]]; then
+    printf "$C_YELLOW"
+    cat <<EOF
+--------
+Warning: You are trying to run this script on the unsupported system
+($detected_system).
+--------
+EOF
+    printf "$C_RESET"
+    read -p "Do you wish to continue? (y/n): "
+    printf "\n"
+    [[ $REPLY =~ ^[Nn]$ ]] && exit 1
+fi
+
 # Deprecate short commands.
 # TODO: Remove in 1.0.0
 case "$1" in
