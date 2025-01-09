@@ -80,18 +80,28 @@ allow the upgrade.
 #### Antialiasing
 While GNOME does use the grayscale antialiasing method by default, there are a
 few Linux distributions that change this setting to the subpixel method, making
-the font rendering appear incorrect after the tweaks from this project.
+the font rendering appear incorrect after the tweaks from this project. This
+issue is [already
+tracked](https://github.com/maximilionus/freetype-envision/issues/7), but
+manual user intervention is still required for now.
 
-This issue is
-[already tracked](https://github.com/maximilionus/freetype-envision/issues/7),
-but manual user intervention is still required for now. You can enable the
-grayscale antialiasing method by executing the command below:
+To see if your environment uses the subpixel font antialiasing you can check
+the output of the command below:
+
+```sh
+$ gsettings get org.gnome.desktop.interface font-antialiasing
+'rgba'
+```
+
+If you get the same output as above - you are using the subpixel antialiasing,
+and switching to grayscale antialiasing can be done by executing the next
+command:
 
 ```sh
 gsettings set org.gnome.desktop.interface font-antialiasing grayscale
 ```
 
-To reset the changes:
+To revert the changes:
 
 ```sh
 gsettings reset org.gnome.desktop.interface font-antialiasing
