@@ -61,7 +61,7 @@ allow the upgrade.
 - Environmental configurations:
    - Stem-darkening *(fonts emboldening)* with custom values for `autofitter`,
    `type1`, `t1cid` and `cff` drivers.
-   > This feature improves visibility of the medium and small sized-fonts.
+   > This feature improves visibility of the medium and small-sized fonts.
    > Especially helpful for the LowPPI displays.
 
 - Rules for fontconfig:
