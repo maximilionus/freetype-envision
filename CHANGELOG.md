@@ -1,3 +1,10 @@
+## Development
+- Main script QOL enhancements.
+
+- Add an unsupported platform notice to the main script, which will appear on
+  any attempts to run the script on the non-Linux environment.
+
+
 ## Release 0.7.0
 - Project modes are now deprecated. There is no point in keeping the **full
   mode** anymore, as most of it's features are now included by default in
