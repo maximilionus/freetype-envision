@@ -57,9 +57,7 @@ case $1 in
     # "i" is deprecated
     # TODO: Remove in 1.0.0
     i|install)
-        # $2 (modes) are deprecated
-        # TODO: Remove in 1.0.0
-        cmd_install $2
+        cmd_install
         ;;
     # "r" is deprecated
     # TODO: Remove in 1.0.0
