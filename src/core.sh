@@ -75,7 +75,22 @@ exit 1
     fi
 }
 
-# Call the universal uninstaller that should be stored on target maching
+check_system () {
+    if [[ $( uname -s ) != Linux* ]]; then
+        printf "$C_YELLOW"
+        cat <<EOF
+You are trying to run this script on the unsupported platform.
+Proceed at your own risk.
+
+EOF
+        printf "$C_RESET"
+        read -p "Do you wish to continue? (y/n): "
+        printf "\n"
+        [[ $REPLY =~ ^[Nn]$ ]] && exit 1
+    fi
+}
+
+# Call the locally stored uninstaller from target machine
 call_uninstaller () {
     if [[ ! -f "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE" ]]; then
         printf "${C_RED}Uninstaller script not found, installation corrupted${C_RESET}"
@@ -103,7 +118,7 @@ EOF
 }
 
 cmd_install () {
-    printf "${C_BOLD}Setting up${C_RESET}\n"
+    printf "Setting up\n"
 
     load_info_file
     check_for_old
@@ -120,6 +135,8 @@ cmd_install () {
     fi
 
     require_root
+
+    printf "$C_DIM"
 
     printf "Storing the installation metadata\n"
     mkdir -p "$DEST_SHARED_DIR"
@@ -168,11 +185,13 @@ EOF
 echo "Successful removal"
 EOF
 
+    printf "$C_RESET"
+
     printf "${C_GREEN}Success!${C_RESET} Reboot to apply the changes.\n"
 }
 
 cmd_remove () {
-    printf "${C_BOLD}Removing${C_RESET}\n"
+    printf "Removing\n"
 
     load_info_file
     check_for_old

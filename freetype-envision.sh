@@ -4,20 +4,7 @@ set -e
 source src/core.sh
 
 [[ $SHOW_HEADER = true ]] && show_header
-
-detected_system="$( uname -s )"
-if [[ $detected_system != Linux* ]]; then
-    printf "$C_YELLOW"
-    cat <<EOF
-You are trying to run this script on the unsupported platform.
-Proceed at your own risk.
-
-EOF
-    printf "$C_RESET"
-    read -p "Do you wish to continue? (y/n): "
-    printf "\n"
-    [[ $REPLY =~ ^[Nn]$ ]] && exit 1
-fi
+check_system
 
 # Deprecate short commands.
 # TODO: Remove in 1.0.0
