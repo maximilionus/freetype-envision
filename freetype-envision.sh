@@ -9,10 +9,9 @@ detected_system="$( uname -s )"
 if [[ $detected_system != Linux* ]]; then
     printf "$C_YELLOW"
     cat <<EOF
---------
-Warning: You are trying to run this script on the unsupported system
-($detected_system).
---------
+You are trying to run this script on the unsupported platform.
+Proceed at your own risk.
+
 EOF
     printf "$C_RESET"
     read -p "Do you wish to continue? (y/n): "
