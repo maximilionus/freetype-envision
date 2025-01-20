@@ -12,14 +12,13 @@ Visual demonstration can be found
 
 
 ## Usage
-You can easily install and control the project with web wrapper script
+You can easily install and upgrade with web wrapper:
 ```sh
 curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
     | sudo bash -s -- install
 ```
 
-You can also specify the version of project you want to use by declaring the
-`VERSION` environmental variable
+Version can also be selected by declaring the `VERSION` environmental variable:
 ```sh
 curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
     | sudo VERSION="0.2.0" bash -s -- [COMMAND]
