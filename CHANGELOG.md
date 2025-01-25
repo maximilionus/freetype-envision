@@ -1,8 +1,10 @@
 ## Development
-- Add an unsupported platform notice to the main script, which will appear on
-  any attempts to run the script on the non-Linux environment.
+- Unsupported platform notice in the main script, which will appear on any
+  attempts to run it on the non-Linux environments.
 
-- Improved main script installation process.
+- Improved main script installation process stability.
+
+- Improved color output for main script.
 
 
 ## Release 0.7.0
