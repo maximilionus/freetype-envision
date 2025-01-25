@@ -1,8 +1,8 @@
 ## Development
-- Main script QOL enhancements.
-
 - Add an unsupported platform notice to the main script, which will appear on
   any attempts to run the script on the non-Linux environment.
+
+- Improved main script installation process.
 
 
 ## Release 0.7.0
