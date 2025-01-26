@@ -1,4 +1,4 @@
-NAME="freetype-envision"
+NAME="lucidglyph"
 VERSION="0.7.0"
 SRC_DIR=src
 
@@ -6,18 +6,18 @@ SRC_DIR=src
 SHOW_HEADER=${SHOW_HEADER:=true}
 
 # environment
-ENVIRONMENT_SCRIPT="$SRC_DIR/environment/freetype-envision.sh"
+ENVIRONMENT_SCRIPT="$SRC_DIR/environment/lucidglyph.sh"
 DEST_ENVIRONMENT="/etc/environment"
 
 # fontconfig
 FONTCONFIG_DIR="$SRC_DIR/fontconfig"
 DEST_FONTCONFIG_DIR="/etc/fonts/conf.d"
 #                    ("<NAME>" "<PRIORITY>")
-FONTCONFIG_GRAYSCALE=("freetype-envision-grayscale.conf" 11)
-FONTCONFIG_DROID_SANS=("freetype-envision-droid-sans.conf" 70)
+FONTCONFIG_GRAYSCALE=("lucidglyph-grayscale.conf" 11)
+FONTCONFIG_DROID_SANS=("lucidglyph-droid-sans.conf" 70)
 
 # Metadata location
-DEST_SHARED_DIR="/usr/share/freetype-envision"
+DEST_SHARED_DIR="/usr/share/lucidglyph"
 DEST_INFO_FILE="info"
 DEST_UNINSTALL_FILE="uninstaller.sh"
 

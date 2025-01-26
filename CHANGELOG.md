@@ -49,7 +49,7 @@ sourcing the contents of an external file may lead to malicious behavior.
 
 ## Release 0.5.0
 - New fontconfig rule to reject the usage of *Droid Sans* font family for
-  Japanese and Chinese ([Issue #1](https://github.com/maximilionus/freetype-envision/issues/1)).
+  Japanese and Chinese ([Issue #1](https://github.com/maximilionus/lucidglyph/issues/1)).
 - Manual management script will now create special state files to store current
   installation information for further project management.
 - Manual management script shortcut commands (`i`, `r`, `h`) are now deprecated

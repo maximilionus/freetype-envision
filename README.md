@@ -1,9 +1,9 @@
 ## About
-Carefully tuned FreeType font rendering library adjustments, designed to
-improve fonts visibility on Linux platform.
+Carefully tuned font rendering adjustments for FreeType and other components,
+designed to improve fonts visibility on Linux platform.
 
 Visual demonstration can be found
-[here](https://github.com/maximilionus/freetype-envision/wiki/Comparison).
+[here](https://github.com/maximilionus/lucidglyph/wiki/Comparison).
 
 
 ### Overall
@@ -14,32 +14,32 @@ Visual demonstration can be found
 ## Usage
 You can easily install and upgrade with web wrapper:
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
+curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh \
     | sudo bash -s -- install
 ```
 
 Version can also be selected by declaring the `VERSION` environmental variable:
 ```sh
-curl -s -L https://maximilionus.github.io/freetype-envision/wrapper.sh \
+curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh \
     | sudo VERSION="0.2.0" bash -s -- [COMMAND]
 ```
 
 
 ### Install
 1. Download the latest release
-   [here](https://github.com/maximilionus/freetype-envision/releases/latest)
+   [here](https://github.com/maximilionus/lucidglyph/releases/latest)
    *(download "Source code")* and unpack it to any user available location.
 2. Open the terminal in the unpacked directory.
 3. Run the command below, root required:
    ```sh
-   sudo ./freetype-envision.sh install
+   sudo ./lucidglyph.sh install
    ```
 4. Reboot to apply the changes.
 
 ### Remove
 1. Run the command below, root required:
    ```sh
-   sudo ./freetype-envision.sh remove
+   sudo ./lucidglyph.sh remove
    ```
 2. Reboot to apply the changes.
 
@@ -81,7 +81,7 @@ While GNOME does use the grayscale antialiasing method by default, there are a
 few Linux distributions that change this setting to the subpixel method, making
 the font rendering appear incorrect after the tweaks from this project. This
 issue is [already
-tracked](https://github.com/maximilionus/freetype-envision/issues/7), but
+tracked](https://github.com/maximilionus/lucidglyph/issues/7), but
 manual user intervention is still required for now.
 
 To see if your environment uses the subpixel font antialiasing you can check
