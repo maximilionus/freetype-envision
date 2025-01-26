@@ -151,8 +151,6 @@ EOF
 #!/bin/bash
 set -e
 echo "Using uninstaller for version $VERSION"
-echo "Removing the metadata"
-rm -rf "$DEST_SHARED_DIR"
 EOF
 
     printf "Appending the environment entries\n"
@@ -182,6 +180,8 @@ rm -f "$DEST_FONTCONFIG_DIR/${FONTCONFIG_DROID_SANS[1]}-${FONTCONFIG_DROID_SANS[
 EOF
 
     cat <<EOF >> "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+echo "Removing the metadata"
+rm -rf "$DEST_SHARED_DIR"
 echo "Successful removal"
 EOF
 
