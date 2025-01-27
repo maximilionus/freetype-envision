@@ -1,5 +1,5 @@
 NAME="lucidglyph"
-VERSION="0.7.0"
+VERSION="0.8.0"
 SRC_DIR=src
 
 # Display the header with project name and version on start
