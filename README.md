@@ -1,14 +1,21 @@
 ## About
-Carefully tuned font rendering adjustments for FreeType and other components,
-designed to improve fonts visibility on Linux platform.
+Carefully tuned adjustments designed to improve font rendering on Linux,
+including tweaks for freetype, fontconfig and other components.
 
 Visual demonstration can be found
 [here](https://github.com/maximilionus/lucidglyph/wiki/Comparison).
 
+> [!NOTE]  
+> Also known as **freetype-envision**.
+>
+> As the project grew from simple tweaks to freetype and started to cover many
+> additional components of linux environments, the decision was made to rename
+> it to something more relevant.
+
 
 ### Overall
 - Improve the visibility of medium and small-sized fonts.
-- Prepare the font environment to work correctly with the new features.
+- Prepare the font environment for experimental freetype features.
 
 
 ## Usage
