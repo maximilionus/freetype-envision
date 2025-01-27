@@ -75,7 +75,13 @@ load_info_file () {
 # TODO Remove on 1.0.0
 backward_compatibility () {
     if (( ! ${#local_info[@]} )); then
-        if ls $DEST_FONTCONFIG_DIR/*freetype-envision* > /dev/null 2>&1; then
+        if [[ -f "$DEST_SHARED_DIR_OLD/$DEST_INFO_FILE" ]]; then
+            # Load the 0.7.0 state file
+            local temp="$DEST_SHARED_DIR"
+            DEST_SHARED_DIR="$DEST_SHARED_DIR_OLD"
+            load_info_file
+            DEST_SHARED_DIR="$temp"
+        elif ls $DEST_FONTCONFIG_DIR/*freetype-envision* > /dev/null 2>&1; then
             cat <<EOF
 Project is already installed on the system, presumably with package manager or
 an installation script of the version below '0.7.0', that does not support the
@@ -83,12 +89,6 @@ automatic removal. You have to uninstall it using the original installation
 method first.
 EOF
             exit 1
-        elif [[ -d "$DEST_SHARED_DIR_OLD" ]]; then
-            # Load the 0.7.0 state file
-            local temp="$DEST_SHARED_DIR"
-            DEST_SHARED_DIR="$DEST_SHARED_DIR_OLD"
-            load_info_file
-            DEST_SHARED_DIR="$temp"
         fi
     fi
 }
@@ -113,7 +113,7 @@ call_uninstaller () {
     local shared_dir="$DEST_SHARED_DIR"
 
     if verlt ${local_info[version]} "0.8.0"; then
-        # Backwards compatibility with versions below 0.8.0
+        # Backwards compatibility with version 0.7.0
         # (Before the project rename)
         # TODO: Remove on 1.0.0
         shared_dir="$DEST_SHARED_DIR_OLD"
