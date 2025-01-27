@@ -6,7 +6,7 @@ Visual demonstration can be found
 [here](https://github.com/maximilionus/lucidglyph/wiki/Comparison).
 
 > [!NOTE]  
-> Also known as **freetype-envision**.
+> Previously known as **freetype-envision**
 >
 > As the project grew from simple tweaks to freetype and started to cover many
 > additional components of linux environments, the decision was made to rename
