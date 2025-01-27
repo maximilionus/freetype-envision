@@ -40,46 +40,42 @@ verlt() {
 }
 
 
-echo "Web wrapper for $NAME."
-
 TMP_DIR=$( mktemp -d )
-
 if [[ ! -d $TMP_DIR ]]; then
-    echo "[Wrapper] Failed to initialize temporary directory"
-    exit 1
-fi
+    cat <<EOF
+[Wrapper] Critical Error
+    Failed to initialize temporary directory.
 
-echo "[Wrapper] Using temporary directory $TMP_DIR"
-trap 'rm -rf -- "$TMP_DIR" && echo "[Wrapper] Temporary directory $TMP_DIR wiped"' EXIT
+    Please check if "mktemp" command is available and functions properly on
+    your system.
+EOF
+    exit 1
+else
+    trap 'rm -rf -- "$TMP_DIR"' EXIT
+fi
 
 cd "$TMP_DIR"
 
 download_url=""
 if [[ -z $VERSION ]]; then
-    echo "[Wrapper] Preparing the latest release."
-
     download_url=$(curl $CURL_FLAGS "$DOWNLOAD_LATEST_URL"  \
         | grep "tarball_url"                                \
         | tr -d ' ",;'                                      \
         | sed 's/tarball_url://')
 else
-    echo "[Wrapper] Preparing the '$VERSION' release."
-
     if verlt $VERSION $VERSION_MIN_SUPPORTED; then
         cat <<EOF
 [Wrapper] This version is not supported by wrapper script,
           minimal supported version is: $VERSION_MIN_SUPPORTED"
 EOF
         exit 1
+    elif verlt $VERSION "0.8.0"; then
+        # Backwards compatibility for versions below 0.8.0
+        # TODO: Remove after 1.0.0 release
+        NAME="$NAME_OLD"
     fi
 
     download_url="$DOWNLOAD_SELECTED_URL"
-fi
-
-# Backwards compatibility for versions below 0.8.0
-# TODO: Remove after 1.0.0 release
-if verlt $VERSION "0.8.0"; then
-    $NAME="$NAME_OLD"
 fi
 
 curl $CURL_FLAGS -o "$NAME.tar.gz" "$download_url"
