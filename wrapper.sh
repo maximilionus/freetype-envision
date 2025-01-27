@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Wrapper for the freetype-envision project that will download and unpack all
-# the necessary files for the latest or user-specified version, and execute the
+# Wrapper for the lucidglyph project that will download and unpack all the
+# necessary files for the latest or user-specified version, and execute the
 # script, passing all the provided arguments.
 #
 # User can specify the project version with VERSION environmental variable.
@@ -21,17 +21,22 @@
 
 set -e
 
-NAME="freetype-envision"
-SCRIPT_NAME="$NAME.sh"
+NAME="lucidglyph"
+NAME_OLD="freetype-envision"
 VERSION="${VERSION:-}"
 VERSION_MIN_SUPPORTED="0.2.0"
 DOWNLOAD_LATEST_URL="https://api.github.com/repos/maximilionus/$NAME/releases/latest"
 DOWNLOAD_SELECTED_URL="https://api.github.com/repos/maximilionus/$NAME/tarball/v$VERSION"
 CURL_FLAGS="-s --show-error --fail -L"
 
-# Is version $2 >= $1
+# Check if version $2 >= $1
 verlte() {
     [  "$1" = "`echo -e \"$1\n$2\" | sort -V | head -n1`" ]
+}
+
+# Check if version $2 > $1
+verlt() {
+    [ "$1" = "$2" ] && return 1 || verlte $1 $2
 }
 
 
@@ -60,7 +65,7 @@ if [[ -z $VERSION ]]; then
 else
     echo "[Wrapper] Preparing the '$VERSION' release."
 
-    if ! verlte $VERSION_MIN_SUPPORTED $VERSION; then
+    if verlt $VERSION $VERSION_MIN_SUPPORTED; then
         cat <<EOF
 [Wrapper] This version is not supported by wrapper script,
           minimal supported version is: $VERSION_MIN_SUPPORTED"
@@ -71,10 +76,16 @@ EOF
     download_url="$DOWNLOAD_SELECTED_URL"
 fi
 
+# Backwards compatibility for versions below 0.8.0
+# TODO: Remove after 1.0.0 release
+if verlt $VERSION "0.8.0"; then
+    $NAME="$NAME_OLD"
+fi
+
 curl $CURL_FLAGS -o "$NAME.tar.gz" "$download_url"
 
 mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
 cd unpacked
 
-./"$SCRIPT_NAME" "$@"
+./"$NAME.sh" "$@"
