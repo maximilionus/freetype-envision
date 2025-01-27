@@ -18,6 +18,7 @@ FONTCONFIG_DROID_SANS=("lucidglyph-droid-sans.conf" 70)
 
 # Metadata location
 DEST_SHARED_DIR="/usr/share/lucidglyph"
+DEST_SHARED_DIR_OLD="/usr/share/freetype-envision"
 DEST_INFO_FILE="info"
 DEST_UNINSTALL_FILE="uninstaller.sh"
 
@@ -40,6 +41,16 @@ require_root () {
     fi
 }
 
+# Check if version $2 >= $1
+verlte() {
+    [  "$1" = "`echo -e \"$1\n$2\" | sort -V | head -n1`" ]
+}
+
+# Check if version $2 > $1
+verlt() {
+    [ "$1" = "$2" ] && return 1 || verlte $1 $2
+}
+
 # Parse and load the installation information
 load_info_file () {
     if [[ ! -f $DEST_SHARED_DIR/$DEST_INFO_FILE ]]; then
@@ -60,17 +71,24 @@ load_info_file () {
     done < "$DEST_SHARED_DIR/$DEST_INFO_FILE"
 }
 
-# Check for old versions that use deprecated formats and notify user
-check_for_old () {
+# Check for old versions and adapt the script logics
+# TODO Remove on 1.0.0
+backward_compatibility () {
     if (( ! ${#local_info[@]} )); then
-        if ls $DEST_FONTCONFIG_DIR/*$NAME* > /dev/null 2>&1; then
+        if ls $DEST_FONTCONFIG_DIR/*freetype-envision* > /dev/null 2>&1; then
             cat <<EOF
 Project is already installed on the system, presumably with package manager or
 an installation script of the version below '0.7.0', that does not support the
 automatic removal. You have to uninstall it using the original installation
 method first.
 EOF
-exit 1
+            exit 1
+        elif [[ -d "$DEST_SHARED_DIR_OLD" ]]; then
+            # Load the 0.7.0 state file
+            local temp="$DEST_SHARED_DIR"
+            DEST_SHARED_DIR="$DEST_SHARED_DIR_OLD"
+            load_info_file
+            DEST_SHARED_DIR="$temp"
         fi
     fi
 }
@@ -92,13 +110,22 @@ EOF
 
 # Call the locally stored uninstaller from target machine
 call_uninstaller () {
-    if [[ ! -f "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE" ]]; then
+    local shared_dir="$DEST_SHARED_DIR"
+
+    if verlt ${local_info[version]} "0.8.0"; then
+        # Backwards compatibility with versions below 0.8.0
+        # (Before the project rename)
+        # TODO: Remove on 1.0.0
+        shared_dir="$DEST_SHARED_DIR_OLD"
+    fi
+
+    if [[ ! -f "$shared_dir/$DEST_UNINSTALL_FILE" ]]; then
         printf "${C_RED}Uninstaller script not found, installation corrupted${C_RESET}"
         exit 1
     fi
 
     printf "$C_DIM"
-    "$DEST_SHARED_DIR/$DEST_UNINSTALL_FILE"
+    "$shared_dir/$DEST_UNINSTALL_FILE"
     printf "$C_RESET"
 }
 
@@ -121,7 +148,7 @@ cmd_install () {
     printf "Setting up\n"
 
     load_info_file
-    check_for_old
+    backward_compatibility
 
     if [[ ${local_info[version]} == "$VERSION" ]]; then
         printf "${C_GREEN}Current version is already installed.${C_RESET}\n"
@@ -194,7 +221,7 @@ cmd_remove () {
     printf "Removing\n"
 
     load_info_file
-    check_for_old
+    backward_compatibility
 
     if (( ! ${#local_info[@]} )); then
         printf "${C_RED}Project is not installed.${C_RESET}\n"
