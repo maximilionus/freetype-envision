@@ -1,13 +1,12 @@
 ## Release 0.8.0
 - Project has been renamed to "lucidglyph", as it now covers more than freetype
-  itself. Automatic updating from version `0.7.0` **is supported**.
+  itself (and I like how simple the new name is). Automatic updating from
+  version `0.7.0` **is supported**.
 
 - From now on, the project is licensed under GPLv3 again.
 
-- Unsupported platform notice in the main script, which will appear on any
+- New unsupported platform notice in the main script, which will appear on any
   attempts to run it on the non-Linux environments.
-
-- Improved main script installation process stability.
 
 - Improved color output for main script.
 
