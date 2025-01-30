@@ -22,10 +22,10 @@
 
 export FREETYPE_PROPERTIES=\
 "autofitter:no-stem-darkening=0\
- autofitter:darkening-parameters=500,0,1000,500,1250,350,1500,0\
+ autofitter:darkening-parameters=500,0,1000,500,1500,500,2500,0\
  cff:no-stem-darkening=0\
- cff:darkening-parameters=500,500,1000,500,1500,350,2000,0\
+ cff:darkening-parameters=500,475,1000,475,1500,475,2500,0\
  type1:no-stem-darkening=0\
- type1:darkening-parameters=500,500,1000,500,1500,350,2000,0\
+ type1:darkening-parameters=500,475,1000,475,1500,475,2500,0\
  t1cid:no-stem-darkening=0\
- t1cid:darkening-parameters=500,500,1000,500,1500,350,2000,0"
+ t1cid:darkening-parameters=500,475,1000,475,1500,475,2500,0"
