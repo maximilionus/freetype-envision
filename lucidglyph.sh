@@ -181,9 +181,9 @@ cmd_install () {
         read -p "Do you wish to upgrade to version $VERSION? (y/n): "
         printf "\n"
         [[ $REPLY =~ ^[Yy]$ ]] && call_uninstaller || exit 1
+    else
+        require_root
     fi
-
-    require_root
 
     printf "$C_DIM"
 
