@@ -84,4 +84,4 @@ mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
 cd unpacked
 
-./"$NAME.sh" "$@"
+sudo ./"$NAME.sh" "$@"
