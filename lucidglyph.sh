@@ -157,7 +157,7 @@ cmd_help () {
     cat <<EOF
 Usage: $0 [COMMAND]
 
-Font rendering adjustments designed to improve fonts visibility on Linux.
+Carefully tuned adjustments designed to improve font rendering on Linux
 
 COMMANDS:
   install  Install the project.
