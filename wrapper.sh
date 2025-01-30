@@ -5,19 +5,6 @@
 # script, passing all the provided arguments.
 #
 # User can specify the project version with VERSION environmental variable.
-#
-# Usage:
-# ------
-# $ curl -s -L [LINK]/wrapper.sh \
-#       | sudo bash -s -- [COMMAND]
-#
-# Examples:
-# --------
-# $ curl -s -L [LINK]/wrapper.sh \
-#       | sudo bash -s -- install
-#
-# $ curl -s -L [LINK]/wrapper.sh \
-#       | sudo VERSION=0.2.0 bash -s -- install
 
 set -e
 
@@ -40,7 +27,7 @@ verlt() {
 }
 
 
-printf "Web wrapper for the $NAME"
+printf "Web wrapper for the $NAME\n"
 
 TMP_DIR=$( mktemp -d )
 if [[ ! -d $TMP_DIR ]]; then
