@@ -40,6 +40,8 @@ verlt() {
 }
 
 
+printf "Web wrapper for the $NAME"
+
 TMP_DIR=$( mktemp -d )
 if [[ ! -d $TMP_DIR ]]; then
     cat <<EOF
@@ -84,4 +86,5 @@ mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
 cd unpacked
 
+printf "Root access is required for project management\n\n"
 sudo ./"$NAME.sh" "$@"
