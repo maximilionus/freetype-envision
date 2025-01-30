@@ -21,14 +21,14 @@ Visual demonstration can be found
 ## Usage
 You can easily install and upgrade with web wrapper:
 ```sh
-curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh \
-    | sudo bash -s -- install
+bash <(curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh) \
+    install
 ```
 
 Version can also be selected by declaring the `VERSION` environmental variable:
 ```sh
-curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh \
-    | sudo VERSION="0.2.0" bash -s -- [COMMAND]
+VERSION="0.2.0" bash <(curl -s -L https://maximilionus.github.io/lucidglyph/wrapper.sh) \
+    [COMMAND]
 ```
 
 
