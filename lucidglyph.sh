@@ -160,7 +160,7 @@ Usage: $0 [COMMAND]
 Carefully tuned adjustments designed to improve font rendering on Linux
 
 COMMANDS:
-  install  Install the project.
+  install  Install or upgrade the project.
   remove   Remove the installed project.
   help     Show this help message.
 EOF
