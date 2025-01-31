@@ -8,6 +8,8 @@ Major improvements to multiple font drivers
 - Enhanced visibility of different styles (regular, bold, italic) in
   `autofitter` driver.
 
+- Main script will now print the help message if no command provided.
+
 
 ## Release 0.8.0
 - Project has been renamed to "lucidglyph", as it now covers more than freetype

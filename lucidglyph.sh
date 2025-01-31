@@ -309,11 +309,11 @@ case $1 in
         ;;
     # "h" is deprecated
     # TODO: Remove in 1.0.0
-    h|help)
+    h|""|help)
         cmd_help
         ;;
     *)
-        printf "${C_RED}Invalid argument${C_RESET} $1\n"
+        printf "${C_RED}Invalid command${C_RESET} $1\n"
         printf "Use ${C_WHITE_BOLD}help${C_RESET} command to get usage information\n"
         exit 1
 esac
