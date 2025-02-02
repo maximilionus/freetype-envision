@@ -1,5 +1,5 @@
 # Release 0.9.0
-Major improvements to multiple font drivers
+Major improvements to multiple font drivers.
 
 - Achieved completely correct rendering of emboldened `cff` driver fonts.
 
