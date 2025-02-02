@@ -73,5 +73,16 @@ mkdir unpacked
 tar -xzf "$NAME.tar.gz" --strip-components=1 -C unpacked
 cd unpacked
 
-printf "Root access is required for project management\n\n"
-sudo ./"$NAME.sh" "$@"
+elevate=""
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    printf "Root access is required for project management\n"
+    elevate="sudo"
+
+    if ! command -v $elevate 2>&1 >/dev/null; then
+        printf "Can not request elevation since $elevate is missing on the system!\n"
+        exit 1
+    fi
+fi
+
+printf "\n"
+$elevate ./"$NAME.sh" "$@"
