@@ -1,3 +1,16 @@
+# Release 0.9.0
+Major improvements to multiple font drivers.
+
+- Achieved completely correct rendering of emboldened `cff` driver fonts.
+
+- Increased darkening for small fonts in `autofitter` driver.
+
+- Enhanced visibility of different styles (regular, bold, italic) in
+  `autofitter` driver.
+
+- Main script will now print the help message if no command provided.
+
+
 ## Release 0.8.0
 - Project has been renamed to "lucidglyph", as it now covers more than freetype
   itself (and I like how simple the new name is). Automatic updating from

@@ -112,14 +112,3 @@ To revert the changes:
 ```sh
 gsettings reset org.gnome.desktop.interface font-antialiasing
 ```
-
-#### Fonts
-GNOME users should consider changing the default interface font *Cantarell* to
-any other similar font that doesn't render with the `cff` engine. Hinting in
-`cff` engine is broken, making the fonts look very distorted after emboldening.
-
-Changing the fonts is possible through the `gnome-tweaks` utility.
-
-Fonts to consider:
-- Inter *(size: `10.5pt`)*
-- Noto Sans *(size: `10.5pt`)*

@@ -19,7 +19,7 @@
 set -e
 
 NAME="lucidglyph"
-VERSION="0.8.0"
+VERSION="0.9.0"
 SRC_DIR=src
 
 # Display the header with project name and version on start
@@ -160,9 +160,9 @@ Usage: $0 [COMMAND]
 Carefully tuned adjustments designed to improve font rendering on Linux
 
 COMMANDS:
-  install  Install the project.
-  remove   Remove the installed project.
-  help     Show this help message.
+  install  Install or upgrade the project
+  remove   Remove the installed project
+  help     Show this help message
 EOF
 }
 
@@ -309,11 +309,11 @@ case $1 in
         ;;
     # "h" is deprecated
     # TODO: Remove in 1.0.0
-    h|help)
+    h|""|help)
         cmd_help
         ;;
     *)
-        printf "${C_RED}Invalid argument${C_RESET} $1\n"
+        printf "${C_RED}Invalid command${C_RESET} $1\n"
         printf "Use ${C_WHITE_BOLD}help${C_RESET} command to get usage information\n"
         exit 1
 esac
